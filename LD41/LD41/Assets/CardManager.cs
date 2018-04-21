@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    public enum SelectionState
-    {
-        None,
-        First,
-        Last
-    }
-
-
     public List<GameObject> Cards = new List<GameObject>();
 
     public Texture2D Question;
@@ -19,21 +11,47 @@ public class CardManager : MonoBehaviour
     public Texture2D Health;
     public Texture2D Poison;
     public Texture2D Poison2;
+    public Texture2D Block;
+    
+    public Card FirstCard = null;
+    public Card SecondCard = null;
 
-    public SelectionState State;
+    private bool isEvaluating = false;
 
-    public Card.CardValue FirstValue = Card.CardValue.Unknown;
-    public Card.CardValue SecondValue = Card.CardValue.Unknown;
+    private float evaluationTimer = 0.0f;
+    private static float kMaxEvaluationTime = 0.7f;
 
-    //private 
+    private bool isMatchFound = false;
 
     private void Awake()
     {
+        Transform firstCard = transform.GetChild(0);
+
+        for (int i = 1; i < 9; ++i)
+        {
+            GameObject obj = GameObject.Instantiate(firstCard.gameObject, transform) as GameObject;
+            obj.name = "card" + i.ToString();
+
+            Vector3 stepRight = new Vector3(0.25f, 0.0f, 0.0f);
+            Vector3 stepDown = new Vector3(0.0f, -0.25f, 0.0f);
+
+
+            int col = i / 3;
+            int row = i % 3;
+
+            Vector3 pos = obj.transform.localPosition;
+            pos.x += (float)col * stepRight.x;
+            pos.y += (float)row * stepDown.y;
+
+            obj.transform.localPosition = pos;
+        }
         Cards.Clear();
         foreach (Transform child in transform)
         {
             Cards.Add(child.gameObject);
-        }   
+        }
+
+        ResetAll(true);
     }
     // Use this for initialization
     void Start () {
@@ -41,6 +59,16 @@ public class CardManager : MonoBehaviour
 
     void Update ()
     {
+        if (isEvaluating)
+        {
+            evaluationTimer += Time.deltaTime;
+            if (evaluationTimer > kMaxEvaluationTime)
+            {
+                evaluationTimer = 0.0f;
+                ResetAll(isMatchFound);
+                isEvaluating = false;
+            }
+        }
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
@@ -57,56 +85,42 @@ public class CardManager : MonoBehaviour
                     Debug.Log("hit: " + obj.name);
 
                     Card card = obj.GetComponent<Card>();
-                    if (card != null && !card.Revealed)
+                    if (card != null && !card.Revealed && !isEvaluating)
                     {
-                        if (FirstValue == Card.CardValue.Unknown && SecondValue == Card.CardValue.Unknown)
+                        if (FirstCard == null && SecondCard == null)
                         {
 
-                                FirstValue = card.Value;
-                                SetTexture(obj, GetTextureForCardValue(card.Value));
+                            FirstCard = card;
+                            SetTexture(obj, GetTextureForCardValue(card.Value));
                             card.Revealed = true;
 
 
                         }
-                        else if (FirstValue != Card.CardValue.Unknown && SecondValue == Card.CardValue.Unknown)
+                        else if (FirstCard != null && SecondCard == null)
                         {
 
-                                SecondValue = card.Value;
+                            SecondCard = card;
                                 SetTexture(obj, GetTextureForCardValue(card.Value));
                             card.Revealed = true;
 
 
-                            // Start a reveal timer. for evaluation
+                            Evaluate();
                         }
-                        else
-                        {
-                            ResetAll();
-                        }
-                    }
-
-
-
-
-
-                    switch (State)
-                    {
-                        case SelectionState.None:
-                            SetTexture(obj, Ammo);
-                            State = SelectionState.First;
-                            break;
-                        case SelectionState.First:
-                            SetTexture(obj, Health);
-                            State = SelectionState.Last;
-                            break;
-                        case SelectionState.Last:
-                            ResetAll();
-                            State = SelectionState.None;
-                            break;
                     }
                 }
             }
         }
 
+    }
+
+    private void Evaluate()
+    {
+        isEvaluating = true;
+        // Start a reveal timer. for evaluation
+
+        isMatchFound = FirstCard.Value == SecondCard.Value;
+        FirstCard.ShowResult(isMatchFound);
+        SecondCard.ShowResult(isMatchFound);
     }
 
     private Texture2D GetTextureForCardValue(Card.CardValue cardValue)
@@ -124,6 +138,8 @@ public class CardManager : MonoBehaviour
                 return Poison;
             case Card.CardValue.Poison2:
                 return Poison2;
+            case Card.CardValue.Block:
+                return Block;
             default:
                 return Question;
         }
@@ -170,16 +186,41 @@ public class CardManager : MonoBehaviour
         {
             Card card = c.GetComponent<Card>();
             card.Value = jumbledValues[index];
+
+            ++index;
+        }
+    }
+
+    private void HideAllCards()
+    {
+        int index = 0;
+        foreach (GameObject c in Cards)
+        {
+            Card card = c.GetComponent<Card>();
             card.Revealed = false;
 
             ++index;
         }
     }
 
-    private void ResetAll()
+    private void ResetAll(bool newCardValues)
     {
         ResetImages();
-        InitCardValues();
+        HideAllCards();
+
+        if (newCardValues)
+            InitCardValues();
+
+
+
+        if (FirstCard != null)
+            FirstCard.HideResult();
+
+        if (SecondCard != null)
+            SecondCard.HideResult();
+
+        FirstCard = null;
+        SecondCard = null;
     }
 
     private void SetTexture(GameObject obj, Texture2D tex)
