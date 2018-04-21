@@ -23,6 +23,10 @@ public class CardManager : MonoBehaviour
 
     private bool isMatchFound = false;
 
+    public delegate void CardMatchHandler(Card.CardValue value);
+
+    public CardMatchHandler cardMatchHandler = null;
+
     private void Awake()
     {
         Transform firstCard = transform.GetChild(0);
@@ -121,6 +125,9 @@ public class CardManager : MonoBehaviour
         isMatchFound = FirstCard.Value == SecondCard.Value;
         FirstCard.ShowResult(isMatchFound);
         SecondCard.ShowResult(isMatchFound);
+
+        if (isMatchFound && cardMatchHandler != null)
+            cardMatchHandler(FirstCard.Value);
     }
 
     private Texture2D GetTextureForCardValue(Card.CardValue cardValue)
