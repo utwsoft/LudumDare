@@ -40,6 +40,7 @@ public class Spawner : MonoBehaviour {
         {
             GameObject obj = GameObject.Instantiate(PrefabTarget);
             obj.transform.position = transform.position;
+            obj.transform.parent = Main.Get().Targets.transform;
             Target tgt = obj.GetComponent<Target>();
             tgt.Speed = Speed;
             tgt.Flipped = Flipped;

@@ -9,6 +9,8 @@ public class Main : MonoBehaviour {
     public UI gameUI;
     public CardManager cardManager;
 
+    public GameObject Targets;
+
     public int AmmoCount = 10;
     public int Score = 0;
 
@@ -82,6 +84,8 @@ public class Main : MonoBehaviour {
             }
                 
         }
+
+        CleanupTargets();
     }
 
     private void Fire()
@@ -103,14 +107,49 @@ public class Main : MonoBehaviour {
                     
                     Target tgt = hit.collider.GetComponentInParent<Target>();
 
-                    int pointValue = tgt.PointValue;
-                    Score += pointValue;
-                    UpdateUI();
-                    
                     if (tgt != null)
+                    {
+                        int pointValue = tgt.PointValue;
+                        Score += pointValue;
+                        UpdateUI();
+
                         tgt.KnockDown();
+                    }
+                        
                 }
             }
         }
+    }
+
+    private void CleanupTargets()
+    {
+        for (int i = Targets.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = Targets.transform.GetChild(i);
+            Vector3 pos = child.transform.position;
+
+            if (pos.x <= -18.0f || pos.x > 18.0f)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
+    }
+
+
+    // Singleton not fully enforced, but whatever.
+    private static Main sInstance = null;
+
+    public static Main Get()
+    {
+        if (sInstance == null)
+        {
+            GameObject obj = GameObject.Find("_Game");
+            if (obj != null)
+            {
+                sInstance = obj.GetComponent<Main>();
+            }
+        }
+
+        return sInstance;
     }
 }
