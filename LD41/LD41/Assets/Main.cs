@@ -13,13 +13,13 @@ public class Main : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        RaycastHit hit;
+        //RaycastHit hit;
 
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit))
-        {
-            Debug.Log(hit.collider.name);
-        }
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //if (Physics.Raycast(ray, out hit))
+        //{
+        //    Debug.Log(hit.collider.name);
+        //}
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -32,6 +32,22 @@ public class Main : MonoBehaviour {
             Vector3 pos = Player.transform.position;
             pos -= new Vector3(0.1f, 0.0f, 0.0f);
             Player.transform.position = pos;
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null)
+                {
+                    Target tgt = hit.collider.GetComponentInParent<Target>();
+                    if (tgt != null)
+                        tgt.KnockDown();
+                }
+            }
         }
     }
 }
