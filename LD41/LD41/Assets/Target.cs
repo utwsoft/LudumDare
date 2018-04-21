@@ -14,6 +14,8 @@ public class Target : MonoBehaviour {
 
     private float mKnockdownAngle = 0.0f;
 
+    public int PointValue = 100;
+
     // Use this for initialization
     void Start () {
 		

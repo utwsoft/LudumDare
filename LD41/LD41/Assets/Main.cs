@@ -10,12 +10,24 @@ public class Main : MonoBehaviour {
     public CardManager cardManager;
 
     public int AmmoCount = 10;
+    public int Score = 0;
 
     // Use this for initialization
     void Start () {
         UpdateAmmoUI();
 
         cardManager.cardMatchHandler = OnCardMatch;
+    }
+
+    private void UpdateUI()
+    {
+        UpdateScoreUI();
+        UpdateAmmoUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        gameUI.Score.text = Score.ToString();
     }
 
     private void UpdateAmmoUI()
@@ -88,7 +100,13 @@ public class Main : MonoBehaviour {
             {
                 if (hit.collider != null)
                 {
+                    
                     Target tgt = hit.collider.GetComponentInParent<Target>();
+
+                    int pointValue = tgt.PointValue;
+                    Score += pointValue;
+                    UpdateUI();
+                    
                     if (tgt != null)
                         tgt.KnockDown();
                 }
