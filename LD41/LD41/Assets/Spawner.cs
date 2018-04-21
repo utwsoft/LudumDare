@@ -42,11 +42,7 @@ public class Spawner : MonoBehaviour {
             obj.transform.position = transform.position;
             Target tgt = obj.GetComponent<Target>();
             tgt.Speed = Speed;
-
-            if (Flipped)
-            {
-                obj.transform.localRotation = Quaternion.AngleAxis(180.0f, Vector3.up);
-            }
+            tgt.Flipped = Flipped;
         }
     }
 

@@ -8,6 +8,8 @@ public class Target : MonoBehaviour {
 
     public float Speed = 0.50f;
 
+    public bool Flipped = false;
+
     private bool mKnockedDown = false;
 
     private float mKnockdownAngle = 0.0f;
@@ -26,13 +28,18 @@ public class Target : MonoBehaviour {
         pos.x += Speed;
         transform.position = pos;
 
+        Quaternion q1 = Quaternion.AngleAxis(Flipped ? 180.0f : 0.0f, Vector3.up);
+        Quaternion q2 = Quaternion.identity;
+
         if (mKnockedDown && mKnockdownAngle < 90.0f)
         {
             mKnockdownAngle += Time.deltaTime * 400.0f;
-
-            Quaternion q = Quaternion.AngleAxis(mKnockdownAngle, Vector3.right);
-            transform.rotation = q;
         }
+
+        q2 = Quaternion.AngleAxis(mKnockdownAngle, Vector3.right);
+        
+
+        transform.rotation = q2 * q1;
     }
 
 
