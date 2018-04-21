@@ -4,3 +4,4 @@ Library/
 *.csproj
 *.blend1
 Temp/
+out/
