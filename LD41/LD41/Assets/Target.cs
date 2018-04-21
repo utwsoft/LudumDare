@@ -31,7 +31,7 @@ public class Target : MonoBehaviour {
             mKnockdownAngle += Time.deltaTime * 400.0f;
 
             Quaternion q = Quaternion.AngleAxis(mKnockdownAngle, Vector3.right);
-            transform.localRotation = q;
+            transform.rotation = q;
         }
     }
 

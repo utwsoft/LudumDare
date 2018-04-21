@@ -11,12 +11,12 @@ public class Main : MonoBehaviour {
 
     public int AmmoCount = 10;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         UpdateAmmoUI();
 
         cardManager.cardMatchHandler = OnCardMatch;
-	}
+    }
 
     private void UpdateAmmoUI()
     {
@@ -31,9 +31,9 @@ public class Main : MonoBehaviour {
             UpdateAmmoUI();
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+    
+    // Update is called once per frame
+    void Update () {
         //RaycastHit hit;
 
         //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -62,7 +62,8 @@ public class Main : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (!hit.collider.GetComponentInParent<Card>())
+                //if (!hit.collider.GetComponentInParent<Card>())
+                if (hit.collider.gameObject.tag == "targetable")
                 {
                     Fire();
                 }

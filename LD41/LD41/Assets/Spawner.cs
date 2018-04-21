@@ -4,24 +4,26 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
 
-	public float Timer = 0.0f;
+    public float Timer = 0.0f;
 
     public float Interval = 1.0f;
 
     public float Speed = 1.0f;
 
+    public bool Flipped = false;
+
 
 
     public GameObject PrefabTarget;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		Timer += Time.deltaTime;	
+    // Use this for initialization
+    void Start () {
+        
+    }
+    
+    // Update is called once per frame
+    void Update () {
+        Timer += Time.deltaTime;	
 
         if (Timer > Interval)
         {
@@ -30,7 +32,7 @@ public class Spawner : MonoBehaviour {
         }
 
 
-	}
+    }
 
     void Spawn()
     {
@@ -40,6 +42,11 @@ public class Spawner : MonoBehaviour {
             obj.transform.position = transform.position;
             Target tgt = obj.GetComponent<Target>();
             tgt.Speed = Speed;
+
+            if (Flipped)
+            {
+                obj.transform.localRotation = Quaternion.AngleAxis(180.0f, Vector3.up);
+            }
         }
     }
 
