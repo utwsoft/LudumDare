@@ -24,6 +24,8 @@ public class Main : MonoBehaviour {
 
     private bool isGameOver = false;
 
+    public static float kStageBounds = 18.0f;
+
     // Use this for initialization
     void Start () {
 
@@ -159,7 +161,7 @@ public class Main : MonoBehaviour {
             Transform child = Targets.transform.GetChild(i);
             Vector3 pos = child.transform.position;
 
-            if (pos.x <= -18.0f || pos.x > 18.0f)
+            if (pos.x <= -kStageBounds || pos.x > kStageBounds)
             {
                 GameObject.Destroy(child.gameObject);
             }

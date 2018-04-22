@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Badguy : MonoBehaviour {
 
-    GameObject MuzzleFlash1;
-    GameObject MuzzleFlash2;
+    public GameObject Muzzle1;
+    public GameObject Muzzle2;
+
+    public GameObject PrefabMuzzleFlash;
 
     public float curTime = 0.0f;
     public float curFlashTime = 0.0f;
@@ -14,7 +16,7 @@ public class Badguy : MonoBehaviour {
 
     private Target target = null;
 
-    private static float kFlashLength = 0.1f;   // just a small fraction of a second.
+    private static float kFlashLength = 0.5f;   // just a small fraction of a second.
 
     public bool flash = false;
 
@@ -22,10 +24,12 @@ public class Badguy : MonoBehaviour {
     {
         target = transform.GetComponent<Target>();
 
-        MuzzleFlash1 = GameObject.Find("muzzleflash1");
-        MuzzleFlash2 = GameObject.Find("muzzleflash2");
+        //Muzzle1 = GameObject.Find("muzzle1");
+        //Muzzle2 = GameObject.Find("muzzle2");
 
-        SetMuzzleFlashActive(false);
+        //SetMuzzleFlashActive(false);
+
+        flash = false;
     }
     // Use this for initialization
     void Start () {
@@ -37,9 +41,9 @@ public class Badguy : MonoBehaviour {
 
     IEnumerator DoTurnOffMuzzleFlash()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForEndOfFrame();
 
-        SetMuzzleFlashActive(false);
+        //SetMuzzleFlashActive(false);
     }
     
     // Update is called once per frame
@@ -57,11 +61,17 @@ public class Badguy : MonoBehaviour {
                 curTime = 0.0f;
                 curFlashTime = 0.0f;
 
-                flash = true;
+                //Vector2 pos = transform.localPosition;
+                //pos.y += 0.5f;
+                //transform.localPosition = pos;
 
-                SetMuzzleFlashActive(true);
+                InstantiateMuzzleFlash();
+
+                //SetMuzzleFlashActive(true);
 
                 SendGameMessageOfAttack();
+
+                flash = true;
             }
         }
         else
@@ -70,23 +80,36 @@ public class Badguy : MonoBehaviour {
 
             if (curFlashTime > kFlashLength)
             {
+                //Vector2 pos = transform.localPosition;
+                //pos.y -= 0.5f;
+                //transform.localPosition = pos;
+
                 curTime = 0.0f;
                 curFlashTime = 0.0f;
 
-                SetMuzzleFlashActive(false);
+                //SetMuzzleFlashActive(false);
 
                 flash = false;
             }
         }
     }
 
-    void SetMuzzleFlashActive(bool active)
-    {
-        if (MuzzleFlash1 != null && MuzzleFlash1.activeSelf != active)
-            MuzzleFlash1.SetActive(active);
+    //void SetMuzzleFlashActive(bool active)
+    //{
+    //    if (MuzzleFlash1 != null && MuzzleFlash1.activeSelf != active)
+    //        MuzzleFlash1.SetActive(active);
 
-        if (MuzzleFlash2 != null && MuzzleFlash2.activeSelf != active)
-            MuzzleFlash2.SetActive(active);
+    //    if (MuzzleFlash2 != null && MuzzleFlash2.activeSelf != active)
+    //        MuzzleFlash2.SetActive(active);
+    //}
+
+    private void InstantiateMuzzleFlash()
+    {
+        if (PrefabMuzzleFlash != null && Muzzle1 != null && Muzzle2 != null)
+        {
+            GameObject.Instantiate(PrefabMuzzleFlash, Muzzle1.transform);
+            GameObject.Instantiate(PrefabMuzzleFlash, Muzzle2.transform);
+        }
     }
 
     void SendGameMessageOfAttack()

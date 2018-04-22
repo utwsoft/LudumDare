@@ -49,9 +49,9 @@ public class Spawner : MonoBehaviour {
             tgt.Speed = Speed;
             tgt.Flipped = Flipped;
 
-            int rand = Random.Range(0, 2);
+            float rand = Random.Range(0.0f, 1.0f);
 
-            tgt.SetKind((rand == 0) ? Target.Kind.Duck : Target.Kind.Badguy);
+            tgt.SetKind((rand <= 0.75f) ? Target.Kind.Duck : Target.Kind.Badguy);
         }
     }
 
