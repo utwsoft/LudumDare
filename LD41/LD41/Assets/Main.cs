@@ -121,6 +121,9 @@ public class Main : MonoBehaviour {
         CleanupTargets();
     }
 
+    public AudioClip GunShot;
+    public AudioClip EmptyClick;
+
     private void Fire()
     {
         if (AmmoCount > 0)
@@ -129,6 +132,9 @@ public class Main : MonoBehaviour {
                 AmmoCount--;
 
             UpdateAmmoUI();
+
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.PlayOneShot(GunShot);
 
             RaycastHit hit;
 
@@ -151,6 +157,11 @@ public class Main : MonoBehaviour {
                         
                 }
             }
+        }
+        else
+        {
+            AudioSource audio = GetComponent<AudioSource>();
+            audio.PlayOneShot(EmptyClick);
         }
     }
 
