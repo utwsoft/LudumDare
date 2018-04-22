@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Target : MonoBehaviour {
 
+    public enum Kind
+    {
+        Duck,
+        Badguy
+    }
+
     private float Timer = 0.0f;
 
     public float Speed = 0.50f;
@@ -48,5 +54,48 @@ public class Target : MonoBehaviour {
     public void KnockDown()
     {
         mKnockedDown = true;
+    }
+
+    public void SetKind(Kind kind)
+    {
+        Badguy badguy = GetComponent<Badguy>();
+        Transform badXfrm = transform.Find("badguy");
+        Transform duckXfrm = transform.Find("duck");
+
+        switch (kind)
+        {
+            case Kind.Duck:
+                
+                badguy.enabled = false;
+
+                
+                if (badXfrm != null)
+                {
+                    badXfrm.gameObject.SetActive(false);
+                }
+
+                
+                if (duckXfrm != null)
+                {
+                    duckXfrm.gameObject.SetActive(true);
+                }
+
+                break;
+            case Kind.Badguy:
+
+                badguy.enabled = true;
+                if (badXfrm != null)
+                {
+                    badXfrm.gameObject.SetActive(true);
+                }
+                
+                if (duckXfrm != null)
+                {
+                    duckXfrm.gameObject.SetActive(false);
+                }
+
+                break;
+        }
+
     }
 }

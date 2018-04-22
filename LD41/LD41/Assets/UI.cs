@@ -9,6 +9,7 @@ public class UI : MonoBehaviour {
     public Text Score;
     public Text Health;
 
+    public GameObject HitIndicatorPanel;
     public GameObject GameOverPanel;
 
 	// Use this for initialization

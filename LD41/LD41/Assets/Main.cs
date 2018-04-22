@@ -63,8 +63,18 @@ public class Main : MonoBehaviour {
         if (match == Card.CardValue.Ammo)
         {
             AmmoCount += 10;
-            UpdateAmmoUI();
         }
+        else if (match == Card.CardValue.Health)
+        {
+            Health += 25;
+            
+        }
+        else if (match == Card.CardValue.Poison)
+        {
+            Health -= 8;
+        }
+
+        UpdateUI();
     }
     
     // Update is called once per frame
@@ -160,6 +170,8 @@ public class Main : MonoBehaviour {
     {
         if (Health > 0)
         {
+            HitIndicator();
+
             Health -= BadguyAttackDamage;
 
             Health = Mathf.Max(Health, 0);
@@ -173,6 +185,15 @@ public class Main : MonoBehaviour {
         {
             SetGameOver();
         }
+    }
+
+    private void HitIndicator()
+    {
+        GameObject obj = gameUI.HitIndicatorPanel;
+
+        HitIndicator hit = obj.GetComponent<HitIndicator>();
+
+        hit.GetHit();
     }
 
     private void SetGameOver()

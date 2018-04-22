@@ -48,6 +48,10 @@ public class Spawner : MonoBehaviour {
             Target tgt = obj.GetComponent<Target>();
             tgt.Speed = Speed;
             tgt.Flipped = Flipped;
+
+            int rand = Random.Range(0, 2);
+
+            tgt.SetKind((rand == 0) ? Target.Kind.Duck : Target.Kind.Badguy);
         }
     }
 
