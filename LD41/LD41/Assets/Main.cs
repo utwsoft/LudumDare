@@ -89,18 +89,18 @@ public class Main : MonoBehaviour {
         //    Debug.Log(hit.collider.name);
         //}
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            Vector3 pos = Player.transform.position;
-            pos += new Vector3(0.1f, 0.0f, 0.0f);
-            Player.transform.position = pos;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            Vector3 pos = Player.transform.position;
-            pos -= new Vector3(0.1f, 0.0f, 0.0f);
-            Player.transform.position = pos;
-        }
+        //if (Input.GetKey(KeyCode.D))
+        //{
+        //    Vector3 pos = Player.transform.position;
+        //    pos += new Vector3(0.1f, 0.0f, 0.0f);
+        //    Player.transform.position = pos;
+        //}
+        //else if (Input.GetKey(KeyCode.A))
+        //{
+        //    Vector3 pos = Player.transform.position;
+        //    pos -= new Vector3(0.1f, 0.0f, 0.0f);
+        //    Player.transform.position = pos;
+        //}
 
         if (Input.GetMouseButtonDown(0))
         {
