@@ -53,6 +53,8 @@ public class Badguy : MonoBehaviour {
                 flash = true;
 
                 SetMuzzleFlashActive(true);
+
+                SendGameMessageOfAttack();
             }
         }
         else
@@ -78,5 +80,11 @@ public class Badguy : MonoBehaviour {
 
         if (MuzzleFlash2 != null && MuzzleFlash2.activeSelf != active)
             MuzzleFlash2.SetActive(active);
+    }
+
+    void SendGameMessageOfAttack()
+    {
+        // This is the worst part of a bad design. Don't do this, kids! Use a messaging system instead!
+        Main.Get().TakeDamage();
     }
 }

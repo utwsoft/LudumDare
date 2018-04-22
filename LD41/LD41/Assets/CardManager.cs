@@ -136,7 +136,6 @@ public class CardManager : MonoBehaviour
         {
             case Card.CardValue.Unknown:
                 return Question;
-                break;
             case Card.CardValue.Ammo:
                 return Ammo;
             case Card.CardValue.Health:

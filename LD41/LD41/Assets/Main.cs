@@ -9,13 +9,24 @@ public class Main : MonoBehaviour {
     public UI gameUI;
     public CardManager cardManager;
 
+    public GameObject CurtainLeft;
+    public GameObject CurtainRight;
+
+    public GameObject Spawners;
+
     public GameObject Targets;
 
     public int AmmoCount = 10;
     public int Score = 0;
+    public int Health = 100;
+
+    private bool isGameOver = false;
 
     // Use this for initialization
     void Start () {
+
+        isGameOver = false;
+
         UpdateAmmoUI();
 
         cardManager.cardMatchHandler = OnCardMatch;
@@ -25,6 +36,7 @@ public class Main : MonoBehaviour {
     {
         UpdateScoreUI();
         UpdateAmmoUI();
+        UpdateHealthUI();
     }
 
     private void UpdateScoreUI()
@@ -35,6 +47,11 @@ public class Main : MonoBehaviour {
     private void UpdateAmmoUI()
     {
         gameUI.Ammo.text = AmmoCount.ToString();
+    }
+
+    private void UpdateHealthUI()
+    {
+        gameUI.Health.text = Health.ToString();
     }
 
     private void OnCardMatch(Card.CardValue match)
@@ -135,6 +152,56 @@ public class Main : MonoBehaviour {
         }
     }
 
+    public void TakeDamage()
+    {
+        if (Health > 0)
+        {
+            Health -= 10;
+
+            Health = Mathf.Max(Health, 0);
+
+            UpdateUI();
+        }
+
+
+
+        if (Health <= 0 && !isGameOver)
+        {
+            SetGameOver();
+        }
+    }
+
+    private void SetGameOver()
+    {
+        isGameOver = true;
+
+        // Stop the spawners
+        Spawner[] spawners = Spawners.transform.GetComponentsInChildren<Spawner>();
+        foreach (Spawner s in spawners)
+        {
+            s.IsRunning = false;
+        }
+
+        for (int i = Targets.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = Targets.transform.GetChild(i);
+            Target tgt = child.GetComponent<Target>();
+            tgt.Speed = 0.0f;
+        }
+
+        
+        ActivateCurtain(CurtainLeft);
+        ActivateCurtain(CurtainRight);
+    }
+
+    private void ActivateCurtain(GameObject obj)
+    {
+        if (obj != null)
+        {
+            Curtain curtain = obj.GetComponent<Curtain>();
+            curtain.IsMoving = true;
+        }
+    }
 
     // Singleton not fully enforced, but whatever.
     private static Main sInstance = null;

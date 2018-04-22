@@ -12,6 +12,8 @@ public class Spawner : MonoBehaviour {
 
     public bool Flipped = false;
 
+    public bool IsRunning = true;
+
 
 
     public GameObject PrefabTarget;
@@ -23,15 +25,17 @@ public class Spawner : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-        Timer += Time.deltaTime;	
 
-        if (Timer > Interval)
+        if (IsRunning)
         {
-            Spawn();
-            Timer = 0.0f;
+            Timer += Time.deltaTime;
+
+            if (Timer > Interval)
+            {
+                Spawn();
+                Timer = 0.0f;
+            }
         }
-
-
     }
 
     void Spawn()
