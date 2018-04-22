@@ -55,7 +55,21 @@ public class Spawner : MonoBehaviour {
 
             float rand = Random.Range(0.0f, 1.0f);
 
-            tgt.SetKind((rand <= 0.75f) ? Target.Kind.Duck : Target.Kind.Badguy);
+            Target.Kind kind = Target.Kind.Duck;
+            if (rand <= 0.73f)
+                kind = Target.Kind.Duck;
+            else if (rand <= 0.92f)
+                kind = Target.Kind.Badguy;
+            else
+                kind = Target.Kind.Nun;
+
+            // Late hack. Killing a nun gives negative points
+            if (kind == Target.Kind.Nun)
+            {
+                tgt.PointValue *= -100;
+            }
+
+            tgt.SetKind(kind);
         }
     }
 

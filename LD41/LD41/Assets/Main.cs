@@ -72,19 +72,27 @@ public class Main : MonoBehaviour {
         if (match == Card.CardValue.Ammo)
         {
             AmmoCount += 10;
+
+            gameUI.MakeAmmoBig();
         }
         else if (match == Card.CardValue.Health)
         {
             Health += 25;
-            
+
+            gameUI.MakeHealthBig();
+
         }
         else if (match == Card.CardValue.Poison)
         {
             Health -= 8;
+
+            gameUI.MakeHealthBig();
         }
         else if (match == Card.CardValue.Health100)
         {
             Health = Mathf.Max(Health, 100);
+
+            gameUI.MakeHealthBig();
         }
 
         UpdateUI();
@@ -299,7 +307,8 @@ public class Main : MonoBehaviour {
         if (obj != null)
         {
             Curtain curtain = obj.GetComponent<Curtain>();
-            curtain.CurtainState = Curtain.State.Closing;
+            curtain.SetState(Curtain.State.Closing);
+            //curtain.CurtainState = Curtain.State.Closing;
         }
     }
 
@@ -308,7 +317,8 @@ public class Main : MonoBehaviour {
         if (obj != null)
         {
             Curtain c = obj.GetComponent<Curtain>();
-            c.CurtainState = Curtain.State.Opening;
+            //c.CurtainState = Curtain.State.Opening;
+            c.SetState(Curtain.State.Opening);
         }
     }
 

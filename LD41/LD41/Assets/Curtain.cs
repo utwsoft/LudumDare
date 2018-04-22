@@ -19,6 +19,9 @@ public class Curtain : MonoBehaviour {
 
     private float StartPosX = 0.0f;
 
+    public AudioSource Source;
+    public AudioClip Sound;
+
     void Awake()
     {
         
@@ -44,6 +47,8 @@ public class Curtain : MonoBehaviour {
             if (delta > StopDistance)
             {
                 CurtainState = State.Idle;
+
+                Source.Stop();
             }
         }
         else if (CurtainState == State.Opening)
@@ -60,6 +65,8 @@ public class Curtain : MonoBehaviour {
                 pos.x = StartPosX;
                 transform.position = pos;
                 CurtainState = State.Idle;
+
+                Source.Stop();
             }
         }	
 	}
@@ -68,6 +75,8 @@ public class Curtain : MonoBehaviour {
     {
         if (CurtainState != State.Idle)
             return;
+
+        Source.Play();
 
         CurtainState = state;
     }

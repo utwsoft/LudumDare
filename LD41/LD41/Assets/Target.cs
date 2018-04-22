@@ -7,8 +7,11 @@ public class Target : MonoBehaviour {
     public enum Kind
     {
         Duck,
-        Badguy
+        Badguy,
+        Nun
     }
+
+    public Kind TargetKind;
 
     private float Timer = 0.0f;
 
@@ -27,6 +30,10 @@ public class Target : MonoBehaviour {
     private AudioSource Sound;
 
     public AudioClip TargetHit;
+
+    public AudioClip TargetDuckHit;
+
+    public AudioClip TargetNunHit;
 
     // Use this for initialization
     void Start () {
@@ -62,6 +69,15 @@ public class Target : MonoBehaviour {
         mKnockedDown = true;
 
         Sound.PlayOneShot(TargetHit);
+
+        if (TargetKind == Kind.Duck)
+        {
+            Sound.PlayOneShot(TargetDuckHit);
+        }
+        else if (TargetKind == Kind.Nun)
+        {
+            Sound.PlayOneShot(TargetNunHit);
+        }
     }
 
     public void PopUp()
@@ -77,44 +93,29 @@ public class Target : MonoBehaviour {
 
     public void SetKind(Kind kind)
     {
+        TargetKind = kind;
+
         Badguy badguy = GetComponent<Badguy>();
         Transform badXfrm = transform.Find("badguy");
         Transform duckXfrm = transform.Find("duck");
+        Transform nunXfrm = transform.Find("nun");
 
-        switch (kind)
+
+        badguy.enabled = kind == Kind.Badguy;
+
+        if (badXfrm != null)
         {
-            case Kind.Duck:
-                
-                badguy.enabled = false;
-
-                
-                if (badXfrm != null)
-                {
-                    badXfrm.gameObject.SetActive(false);
-                }
-
-                
-                if (duckXfrm != null)
-                {
-                    duckXfrm.gameObject.SetActive(true);
-                }
-
-                break;
-            case Kind.Badguy:
-
-                badguy.enabled = true;
-                if (badXfrm != null)
-                {
-                    badXfrm.gameObject.SetActive(true);
-                }
-                
-                if (duckXfrm != null)
-                {
-                    duckXfrm.gameObject.SetActive(false);
-                }
-
-                break;
+            badXfrm.gameObject.SetActive(kind == Kind.Badguy);
         }
 
+        if (duckXfrm != null)
+        {
+            duckXfrm.gameObject.SetActive(kind == Kind.Duck);
+        }
+
+        if (nunXfrm != null)
+        {
+            nunXfrm.gameObject.SetActive(kind == Kind.Nun);
+        }
     }
 }
