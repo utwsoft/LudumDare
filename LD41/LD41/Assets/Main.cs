@@ -20,12 +20,16 @@ public class Main : MonoBehaviour {
     public int Score = 0;
     public int Health = 100;
 
+    public int BadguyAttackDamage = 3;
+
     private bool isGameOver = false;
 
     // Use this for initialization
     void Start () {
 
         isGameOver = false;
+
+        gameUI.GameOverPanel.SetActive(false);
 
         UpdateAmmoUI();
 
@@ -156,7 +160,7 @@ public class Main : MonoBehaviour {
     {
         if (Health > 0)
         {
-            Health -= 10;
+            Health -= BadguyAttackDamage;
 
             Health = Mathf.Max(Health, 0);
 
@@ -192,6 +196,8 @@ public class Main : MonoBehaviour {
         
         ActivateCurtain(CurtainLeft);
         ActivateCurtain(CurtainRight);
+
+        gameUI.GameOverPanel.SetActive(true);
     }
 
     private void ActivateCurtain(GameObject obj)

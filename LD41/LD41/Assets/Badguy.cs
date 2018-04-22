@@ -12,12 +12,16 @@ public class Badguy : MonoBehaviour {
 
     public float FireTime = 3.0f;
 
+    private Target target = null;
+
     private static float kFlashLength = 0.1f;   // just a small fraction of a second.
 
     public bool flash = false;
 
     void Awake()
     {
+        target = transform.GetComponent<Target>();
+
         MuzzleFlash1 = GameObject.Find("muzzleflash1");
         MuzzleFlash2 = GameObject.Find("muzzleflash2");
 
@@ -40,6 +44,9 @@ public class Badguy : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
+
+        if (target.mKnockedDown)
+            return;
 
         if (!flash)
         {

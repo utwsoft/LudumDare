@@ -10,7 +10,7 @@ public class Target : MonoBehaviour {
 
     public bool Flipped = false;
 
-    private bool mKnockedDown = false;
+    public bool mKnockedDown = false;
 
     private float mKnockdownAngle = 0.0f;
 
