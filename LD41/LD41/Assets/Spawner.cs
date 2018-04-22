@@ -14,6 +14,8 @@ public class Spawner : MonoBehaviour {
 
     public bool IsRunning = true;
 
+    public float LaneScoreMultiplier = 1.0f;
+
 
 
     public GameObject PrefabTarget;
@@ -48,6 +50,8 @@ public class Spawner : MonoBehaviour {
             Target tgt = obj.GetComponent<Target>();
             tgt.Speed = Speed;
             tgt.Flipped = Flipped;
+
+            tgt.PointValue = (int)((float)tgt.PointValue * LaneScoreMultiplier);
 
             float rand = Random.Range(0.0f, 1.0f);
 

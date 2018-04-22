@@ -178,10 +178,9 @@ public class Main : MonoBehaviour {
                         int pointValue = tgt.PointValue;
                         Score += pointValue;
                         UpdateUI();
-
-                        tgt.KnockDown();
-                    }
                         
+                        StartCoroutine("KnockdownTarget", tgt);
+                    }
                 }
             }
         }
@@ -190,6 +189,14 @@ public class Main : MonoBehaviour {
             AudioSource audio = GetComponent<AudioSource>();
             audio.PlayOneShot(EmptyClick);
         }
+    }
+
+    // Adds delay to the reaction of the target to the gunfire
+    IEnumerator KnockdownTarget(Target tgt)
+    {
+        yield return new WaitForSeconds(0.20f);
+
+        tgt.KnockDown();
     }
 
     private void CleanupTargets()
@@ -260,16 +267,22 @@ public class Main : MonoBehaviour {
             Transform child = Targets.transform.GetChild(i);
             Target tgt = child.GetComponent<Target>();
             tgt.Speed = 0.0f;
+
+            Badguy bad = child.GetComponent<Badguy>();
+            if (bad != null)
+            {
+                bad.IsAttacking = false;
+            }
         }
 
         
-        ActivateCurtain(CurtainLeft);
-        ActivateCurtain(CurtainRight);
+        CloseCurtain(CurtainLeft);
+        CloseCurtain(CurtainRight);
 
         gameUI.GameOverPanel.SetActive(true);
     }
 
-    private void ActivateCurtain(GameObject obj)
+    private void CloseCurtain(GameObject obj)
     {
         if (obj != null)
         {

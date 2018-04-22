@@ -24,6 +24,8 @@ public class Badguy : MonoBehaviour {
 
     public AudioClip BadguyFire;
 
+    public bool IsAttacking = true;
+
     void Awake()
     {
         target = transform.GetComponent<Target>();
@@ -46,7 +48,7 @@ public class Badguy : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (target.mKnockedDown)
+        if (target.mKnockedDown || !IsAttacking)
             return;
 
         if (!flash)
