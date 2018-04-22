@@ -20,6 +20,8 @@ public class Target : MonoBehaviour {
 
     private float mKnockdownAngle = 0.0f;
 
+    public float PopupTime = 2.0f;
+
     public int PointValue = 100;
 
     private AudioSource Sound;
@@ -61,6 +63,17 @@ public class Target : MonoBehaviour {
 
         Sound.PlayOneShot(TargetHit);
     }
+
+    public void PopUp()
+    {
+
+    }
+
+    public void StartDown()
+    {
+        mKnockdownAngle = 89.0f;
+    }
+
 
     public void SetKind(Kind kind)
     {

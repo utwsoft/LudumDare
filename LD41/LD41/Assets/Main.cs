@@ -22,6 +22,13 @@ public class Main : MonoBehaviour {
 
     public int BadguyAttackDamage = 3;
 
+    public AudioClip GunShot;
+    public AudioClip EmptyClick;
+    public AudioClip Reload;
+    public AudioClip HealthPickup;
+    public AudioClip Poison;
+    public AudioClip NoMatch;
+
     private bool isGameOver = false;
 
     public static float kStageBounds = 18.0f;
@@ -95,13 +102,20 @@ public class Main : MonoBehaviour {
         }
         else if (match == Card.CardValue.Health)
         {
-
+            audio.PlayOneShot(HealthPickup);
         }
         else if (match == Card.CardValue.Poison)
         {
+            audio.PlayOneShot(Poison);
         }
         else if (match == Card.CardValue.Health100)
         {
+            audio.PlayOneShot(HealthPickup);
+        }
+        else if (match == Card.CardValue.Unknown)
+        {
+            // No match
+            audio.PlayOneShot(NoMatch);
         }
     }
     
@@ -147,9 +161,7 @@ public class Main : MonoBehaviour {
         CleanupTargets();
     }
 
-    public AudioClip GunShot;
-    public AudioClip EmptyClick;
-    public AudioClip Reload;
+
 
     private void Fire()
     {

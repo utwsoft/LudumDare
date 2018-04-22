@@ -140,8 +140,10 @@ public class CardManager : MonoBehaviour
         FirstCard.ShowResult(isMatchFound);
         SecondCard.ShowResult(isMatchFound);
 
-        if (isMatchFound && cardMatchHandler != null)
-            cardMatchHandler(FirstCard.Value);
+        if (cardMatchHandler != null)
+        {
+            cardMatchHandler(isMatchFound ? FirstCard.Value : Card.CardValue.Unknown);
+        }
     }
 
     private Texture2D GetTextureForCardValue(Card.CardValue cardValue)
