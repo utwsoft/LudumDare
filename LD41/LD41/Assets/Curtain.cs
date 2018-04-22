@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class Curtain : MonoBehaviour {
 
-    public bool IsMoving = false;
+    public enum State
+    {
+        Idle,
+        Closing,
+        Opening
+    }
+
+    public State CurtainState = State.Idle;
     
     public float Rate = 3.0f;
 
@@ -25,7 +32,7 @@ public class Curtain : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-        if (IsMoving)
+        if (CurtainState == State.Closing)
         {
             Vector3 pos = transform.position;
             pos.x += Rate * Time.deltaTime;
@@ -36,8 +43,32 @@ public class Curtain : MonoBehaviour {
 
             if (delta > StopDistance)
             {
-                IsMoving = false;
+                CurtainState = State.Idle;
+            }
+        }
+        else if (CurtainState == State.Opening)
+        {
+            Vector3 pos = transform.position;
+            pos.x += -Rate * Time.deltaTime;
+
+            transform.position = pos;
+
+            float delta = Mathf.Abs(pos.x - StartPosX);
+
+            if (delta <= 0.1f)
+            {
+                pos.x = StartPosX;
+                transform.position = pos;
+                CurtainState = State.Idle;
             }
         }	
 	}
+
+    public void SetState(Curtain.State state)
+    {
+        if (CurtainState != State.Idle)
+            return;
+
+        CurtainState = state;
+    }
 }

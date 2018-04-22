@@ -168,6 +168,16 @@ public class Main : MonoBehaviour {
         }
     }
 
+    private void DestroyAllTargets()
+    {
+        for (int i = Targets.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = Targets.transform.GetChild(i);
+
+            GameObject.Destroy(child.gameObject);
+        }
+    }
+
     public void TakeDamage()
     {
         if (Health > 0)
@@ -203,11 +213,7 @@ public class Main : MonoBehaviour {
         isGameOver = true;
 
         // Stop the spawners
-        Spawner[] spawners = Spawners.transform.GetComponentsInChildren<Spawner>();
-        foreach (Spawner s in spawners)
-        {
-            s.IsRunning = false;
-        }
+        ActivateSpawners(false);
 
         for (int i = Targets.transform.childCount - 1; i >= 0; i--)
         {
@@ -228,8 +234,46 @@ public class Main : MonoBehaviour {
         if (obj != null)
         {
             Curtain curtain = obj.GetComponent<Curtain>();
-            curtain.IsMoving = true;
+            curtain.CurtainState = Curtain.State.Closing;
         }
+    }
+
+    private void OpenCurtain(GameObject obj)
+    {
+        if (obj != null)
+        {
+            Curtain c = obj.GetComponent<Curtain>();
+            c.CurtainState = Curtain.State.Opening;
+        }
+    }
+
+    private void ActivateSpawners(bool run)
+    {
+        Spawner[] spawners = Spawners.transform.GetComponentsInChildren<Spawner>();
+        foreach (Spawner s in spawners)
+        {
+            s.IsRunning = run;
+        }
+    }
+
+    public void OnResetGame()
+    {
+        DestroyAllTargets();
+
+        ActivateSpawners(true);
+
+        Score = 0;
+        Health = 100;
+        AmmoCount = 20;
+
+        UpdateUI();
+
+        gameUI.GameOverPanel.SetActive(false);
+
+        OpenCurtain(CurtainLeft);
+        OpenCurtain(CurtainRight);
+
+        isGameOver = false;
     }
 
     // Singleton not fully enforced, but whatever.
