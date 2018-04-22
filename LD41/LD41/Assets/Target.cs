@@ -22,13 +22,17 @@ public class Target : MonoBehaviour {
 
     public int PointValue = 100;
 
+    private AudioSource Sound;
+
+    public AudioClip TargetHit;
+
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        Sound = GetComponent<AudioSource>();
+    }
+    
+    // Update is called once per frame
+    void Update () {
 
         Timer += Time.deltaTime;
 
@@ -54,6 +58,8 @@ public class Target : MonoBehaviour {
     public void KnockDown()
     {
         mKnockedDown = true;
+
+        Sound.PlayOneShot(TargetHit);
     }
 
     public void SetKind(Kind kind)
