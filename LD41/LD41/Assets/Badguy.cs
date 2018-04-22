@@ -20,14 +20,13 @@ public class Badguy : MonoBehaviour {
 
     public bool flash = false;
 
+    public AudioSource Sound;
+
+    public AudioClip BadguyFire;
+
     void Awake()
     {
         target = transform.GetComponent<Target>();
-
-        //Muzzle1 = GameObject.Find("muzzle1");
-        //Muzzle2 = GameObject.Find("muzzle2");
-
-        //SetMuzzleFlashActive(false);
 
         flash = false;
     }
@@ -42,8 +41,6 @@ public class Badguy : MonoBehaviour {
     IEnumerator DoTurnOffMuzzleFlash()
     {
         yield return new WaitForEndOfFrame();
-
-        //SetMuzzleFlashActive(false);
     }
     
     // Update is called once per frame
@@ -61,14 +58,11 @@ public class Badguy : MonoBehaviour {
                 curTime = 0.0f;
                 curFlashTime = 0.0f;
 
-                //Vector2 pos = transform.localPosition;
-                //pos.y += 0.5f;
-                //transform.localPosition = pos;
 
                 InstantiateMuzzleFlash();
 
-                //SetMuzzleFlashActive(true);
-
+                MakeSound();
+                
                 SendGameMessageOfAttack();
 
                 flash = true;
@@ -80,28 +74,15 @@ public class Badguy : MonoBehaviour {
 
             if (curFlashTime > kFlashLength)
             {
-                //Vector2 pos = transform.localPosition;
-                //pos.y -= 0.5f;
-                //transform.localPosition = pos;
 
                 curTime = 0.0f;
                 curFlashTime = 0.0f;
-
-                //SetMuzzleFlashActive(false);
 
                 flash = false;
             }
         }
     }
 
-    //void SetMuzzleFlashActive(bool active)
-    //{
-    //    if (MuzzleFlash1 != null && MuzzleFlash1.activeSelf != active)
-    //        MuzzleFlash1.SetActive(active);
-
-    //    if (MuzzleFlash2 != null && MuzzleFlash2.activeSelf != active)
-    //        MuzzleFlash2.SetActive(active);
-    //}
 
     private void InstantiateMuzzleFlash()
     {
@@ -116,5 +97,13 @@ public class Badguy : MonoBehaviour {
     {
         // This is the worst part of a bad design. Don't do this, kids! Use a messaging system instead!
         Main.Get().TakeDamage();
+    }
+
+    private void MakeSound()
+    {
+        if (Sound != null && BadguyFire != null)
+        {
+            Sound.PlayOneShot(BadguyFire);
+        }
     }
 }
