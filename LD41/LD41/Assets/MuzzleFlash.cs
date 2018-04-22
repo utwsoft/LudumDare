@@ -8,13 +8,13 @@ public class MuzzleFlash : MonoBehaviour {
 
     public float Alpha = 1.0f;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Use this for initialization
+    void Start () {
+        
+    }
+    
+    // Update is called once per frame
+    void Update () {
         Alpha -= DecayRate * Time.deltaTime;
 
         Renderer r = GetComponent<Renderer>();
@@ -26,5 +26,5 @@ public class MuzzleFlash : MonoBehaviour {
         {
             GameObject.Destroy(gameObject);
         }
-	}
+    }
 }

@@ -18,13 +18,34 @@ public class Reticle : MonoBehaviour {
     {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-        Vector2 pos;
 
-        
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(UICanvas.transform as RectTransform, Input.mousePosition, UICanvas.worldCamera, out pos);
-        ReticleImage.transform.position = UICanvas.transform.TransformPoint(pos);
+    // Update is called once per frame
+    void Update() {
+
+        bool renderReticle = false;
+
+        RaycastHit hit;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject && hit.collider.gameObject.tag == "targetable")
+                {
+                    renderReticle = true;
+                }
+            }
+        }
+
+        ReticleImage.enabled = renderReticle;
+
+        if (ReticleImage.enabled)
+        {
+            Vector2 pos;
+            
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(UICanvas.transform as RectTransform, Input.mousePosition, UICanvas.worldCamera, out pos);
+            ReticleImage.transform.position = UICanvas.transform.TransformPoint(pos);
+        }
     }
 }
