@@ -110,7 +110,7 @@ public class Main : MonoBehaviour {
             if (Physics.Raycast(ray, out hit))
             {
                 //if (!hit.collider.GetComponentInParent<Card>())
-                if (hit.collider.gameObject.tag == "targetable")
+                if (hit.collider.gameObject.tag == "targetable" && !isGameOver)
                 {
                     Fire();
                 }
@@ -223,6 +223,8 @@ public class Main : MonoBehaviour {
     {
         isGameOver = true;
 
+        cardManager.IsActive = false;
+
         // Stop the spawners
         ActivateSpawners(false);
 
@@ -280,6 +282,8 @@ public class Main : MonoBehaviour {
         UpdateUI();
 
         gameUI.GameOverPanel.SetActive(false);
+
+        cardManager.IsActive = true;
 
         OpenCurtain(CurtainLeft);
         OpenCurtain(CurtainRight);

@@ -16,12 +16,16 @@ public class CardManager : MonoBehaviour
     public Card FirstCard = null;
     public Card SecondCard = null;
 
+    public bool IsActive = true;
+
     private bool isEvaluating = false;
 
     private float evaluationTimer = 0.0f;
     private static float kMaxEvaluationTime = 0.7f;
 
     private bool isMatchFound = false;
+
+
 
     public delegate void CardMatchHandler(Card.CardValue value);
 
@@ -73,6 +77,10 @@ public class CardManager : MonoBehaviour
                 isEvaluating = false;
             }
         }
+
+        if (!IsActive)
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
