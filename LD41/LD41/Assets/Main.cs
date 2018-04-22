@@ -75,8 +75,34 @@ public class Main : MonoBehaviour {
         {
             Health -= 8;
         }
+        else if (match == Card.CardValue.Health100)
+        {
+            Health = Mathf.Max(Health, 100);
+        }
 
         UpdateUI();
+
+        PlayCardResultSound(match);
+    }
+
+    private void PlayCardResultSound(Card.CardValue match)
+    {
+        AudioSource audio = GetComponent<AudioSource>();
+
+        if (match == Card.CardValue.Ammo)
+        {
+            audio.PlayOneShot(Reload);  
+        }
+        else if (match == Card.CardValue.Health)
+        {
+
+        }
+        else if (match == Card.CardValue.Poison)
+        {
+        }
+        else if (match == Card.CardValue.Health100)
+        {
+        }
     }
     
     // Update is called once per frame
@@ -123,6 +149,7 @@ public class Main : MonoBehaviour {
 
     public AudioClip GunShot;
     public AudioClip EmptyClick;
+    public AudioClip Reload;
 
     private void Fire()
     {

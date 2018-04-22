@@ -11,6 +11,7 @@ public class Card : MonoBehaviour {
         Health,
         Poison,
         Poison2,
+        Health100,
         Block
     }
 

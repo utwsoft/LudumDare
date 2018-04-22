@@ -11,7 +11,11 @@ public class CardManager : MonoBehaviour
     public Texture2D Health;
     public Texture2D Poison;
     public Texture2D Poison2;
+    public Texture2D Health100;
     public Texture2D Block;
+
+    public AudioSource Sound;
+    public AudioClip buttonClick;
     
     public Card FirstCard = null;
     public Card SecondCard = null;
@@ -99,6 +103,8 @@ public class CardManager : MonoBehaviour
                     Card card = obj.GetComponent<Card>();
                     if (card != null && !card.Revealed && !isEvaluating)
                     {
+                        Sound.PlayOneShot(buttonClick);
+
                         if (FirstCard == null && SecondCard == null)
                         {
 
@@ -154,6 +160,8 @@ public class CardManager : MonoBehaviour
                 return Poison2;
             case Card.CardValue.Block:
                 return Block;
+            case Card.CardValue.Health100:
+                return Health100;
             default:
                 return Question;
         }
@@ -179,8 +187,8 @@ public class CardManager : MonoBehaviour
             Card.CardValue.Health,
             Card.CardValue.Poison,
             Card.CardValue.Poison,
-            Card.CardValue.Poison2,
-            Card.CardValue.Poison2,
+            Card.CardValue.Health100,
+            Card.CardValue.Health100,
             Card.CardValue.Block,
         };
 
