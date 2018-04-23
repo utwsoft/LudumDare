@@ -183,4 +183,10 @@ public class UI : MonoBehaviour {
         AmmoBonus.gameObject.SetActive(false);
         HealthBonus.gameObject.SetActive(false);
     }
+
+    public PointManager PointMgr
+    {
+        get { return GetComponent<PointManager>(); }
+    }
+
 }

@@ -206,6 +206,7 @@ public class Main : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.20f);
 
+        //gameUI.PointMgr.ShowPoints(tgt.gameObject, tgt.PointValue);
         tgt.KnockDown();
     }
 
