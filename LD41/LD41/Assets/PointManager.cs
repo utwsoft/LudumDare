@@ -22,6 +22,7 @@ public class PointManager : MonoBehaviour {
     public void ShowPoints(GameObject obj, int pts)
     {
         Vector3 pt = obj.transform.position;
+        pt.y += 1.5f;
 
         GameObject display = GameObject.Instantiate(PrefabPointDisplay);
 
