@@ -6,6 +6,7 @@ public class GameOverPanel : MonoBehaviour {
 
     public GameObject GameOverText;
     public GameObject RestartButton;
+    public GameObject QuitButton;
 
     public AudioSource Audio;
     public AudioClip Sound;
@@ -19,8 +20,7 @@ public class GameOverPanel : MonoBehaviour {
 
     void Awake()
     {
-        GameOverText.SetActive(false);
-        RestartButton.SetActive(false);
+        ResetPanel();
     }
 
     // Use this for initialization
@@ -50,6 +50,7 @@ public class GameOverPanel : MonoBehaviour {
         if (curTime > RestartButtonRevealTime)
         {
             RestartButton.SetActive(true);
+            QuitButton.SetActive(true);
         }
 
 
@@ -61,5 +62,11 @@ public class GameOverPanel : MonoBehaviour {
 
         GameOverText.SetActive(false);
         RestartButton.SetActive(false);
+        QuitButton.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
