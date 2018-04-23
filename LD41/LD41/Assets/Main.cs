@@ -40,31 +40,16 @@ public class Main : MonoBehaviour {
 
         gameUI.GameOverPanel.SetActive(false);
 
-        UpdateAmmoUI();
+        UpdateUI(true);
 
         cardManager.cardMatchHandler = OnCardMatch;
     }
 
-    private void UpdateUI()
-    {
-        UpdateScoreUI();
-        UpdateAmmoUI();
-        UpdateHealthUI();
-    }
-
-    private void UpdateScoreUI()
-    {
-        gameUI.Score.text = Score.ToString();
-    }
-
-    private void UpdateAmmoUI()
-    {
-        gameUI.Ammo.text = AmmoCount.ToString();
-    }
-
-    private void UpdateHealthUI()
-    {
-        gameUI.Health.text = Health.ToString();
+    private void UpdateUI(bool immediate)
+    { 
+        gameUI.SetTargetScore(Score, immediate);
+        gameUI.SetTargetAmmo(AmmoCount, immediate);
+        gameUI.SetTargetHealth(Health, immediate);
     }
 
     private void OnCardMatch(Card.CardValue match)
@@ -73,29 +58,34 @@ public class Main : MonoBehaviour {
         {
             AmmoCount += 10;
 
-            gameUI.MakeAmmoBig();
+            gameUI.ShowAmmoBonus(10);
         }
         else if (match == Card.CardValue.Health)
         {
             Health += 25;
 
-            gameUI.MakeHealthBig();
-
+            gameUI.ShowHealthBonus(25);
         }
         else if (match == Card.CardValue.Poison)
         {
-            Health -= 8;
+            Health -= 12;
 
-            gameUI.MakeHealthBig();
+            gameUI.ShowHealthBonus(-12);
+
+            Health = Mathf.Max(Health, 0);
         }
         else if (match == Card.CardValue.Health100)
         {
-            Health = Mathf.Max(Health, 100);
+            int diff = 100 - Health;
+            if (diff > 0)
+            {
+                gameUI.ShowHealthBonus(diff);
+            }
 
-            gameUI.MakeHealthBig();
+            Health = Mathf.Max(Health, 100);
         }
 
-        UpdateUI();
+        UpdateUI(false);
 
         PlayCardResultSound(match);
     }
@@ -178,7 +168,7 @@ public class Main : MonoBehaviour {
             if (AmmoCount > 0)
                 AmmoCount--;
 
-            UpdateAmmoUI();
+            UpdateUI(false);
 
             AudioSource audio = GetComponent<AudioSource>();
             audio.PlayOneShot(GunShot);
@@ -197,7 +187,7 @@ public class Main : MonoBehaviour {
                     {
                         int pointValue = tgt.PointValue;
                         Score += pointValue;
-                        UpdateUI();
+                        UpdateUI(false);
                         
                         StartCoroutine("KnockdownTarget", tgt);
                     }
@@ -253,7 +243,7 @@ public class Main : MonoBehaviour {
 
             Health = Mathf.Max(Health, 0);
 
-            UpdateUI();
+            UpdateUI(false);
         }
 
 
@@ -341,9 +331,10 @@ public class Main : MonoBehaviour {
         Health = 100;
         AmmoCount = 20;
 
-        UpdateUI();
+        UpdateUI(true);
 
         gameUI.GameOverPanel.SetActive(false);
+        gameUI.ResetBonuses();
 
         cardManager.IsActive = true;
 
