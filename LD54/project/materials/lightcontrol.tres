@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cjc62wlkyldrc"]
+
+[ext_resource type="Shader" path="res://shaders/darkness.gdshader" id="1_bixmr"]
+
+[resource]
+shader = ExtResource("1_bixmr")

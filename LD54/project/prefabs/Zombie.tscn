@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://diu46skdm373q"]
+
+[ext_resource type="Material" uid="uid://b1cfd07k5nio5" path="res://materials/MonsterMat.material" id="1_jdqhc"]
+[ext_resource type="Texture2D" uid="uid://bk2y3uyhp84h7" path="res://sprites/zombie.png" id="1_vnq8i"]
+[ext_resource type="Script" path="res://scripts/zombie.cs" id="2_4i7ia"]
+
+[node name="Sprite2D" type="Sprite2D"]
+texture_filter = 1
+material = ExtResource("1_jdqhc")
+position = Vector2(336.25, 262.5)
+scale = Vector2(1.52344, 1.52344)
+texture = ExtResource("1_vnq8i")
+script = ExtResource("2_4i7ia")
