@@ -1,8 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://diu46skdm373q"]
+[gd_scene load_steps=11 format=3 uid="uid://diu46skdm373q"]
 
 [ext_resource type="Material" uid="uid://b1cfd07k5nio5" path="res://materials/MonsterMat.material" id="1_jdqhc"]
 [ext_resource type="Script" path="res://scripts/zombie.cs" id="2_4i7ia"]
 [ext_resource type="Texture2D" uid="uid://snp6l40dh686" path="res://sprites/zombie-Sheet.png" id="2_54eno"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_budwr"]
+atlas = ExtResource("2_54eno")
+region = Rect2(128, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhxaj"]
+atlas = ExtResource("2_54eno")
+region = Rect2(192, 0, 64, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unoss"]
+atlas = ExtResource("2_54eno")
+region = Rect2(256, 0, 64, 128)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mdv4a"]
 atlas = ExtResource("2_54eno")
@@ -15,6 +27,20 @@ region = Rect2(64, 0, 64, 128)
 [sub_resource type="SpriteFrames" id="SpriteFrames_4nrki"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_budwr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bhxaj")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_unoss")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 2.0,
 "texture": SubResource("AtlasTexture_mdv4a")
 }, {
@@ -26,11 +52,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6ool4"]
+radius = 13.7846
+height = 65.6409
+
 [node name="ZombieRoot" type="AnimatedSprite2D"]
 texture_filter = 1
 material = ExtResource("1_jdqhc")
 position = Vector2(336.25, 262.5)
 scale = Vector2(1.52344, 1.52344)
 sprite_frames = SubResource("SpriteFrames_4nrki")
-frame_progress = 0.212624
+frame_progress = 0.692378
 script = ExtResource("2_4i7ia")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.164093, 29.2102)
+shape = SubResource("CapsuleShape2D_6ool4")

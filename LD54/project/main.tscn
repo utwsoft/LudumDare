@@ -43,5 +43,5 @@ shadow_color = Color(0, 0, 0, 0.0745098)
 
 [node name="zombie" parent="monsters" instance=ExtResource("3_m2ux2")]
 position = Vector2(335, 296)
-frame_progress = 0.680104
+frame_progress = 0.303335
 offset = Vector2(0, -60)
