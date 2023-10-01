@@ -33,7 +33,7 @@ public partial class Root : Node2D
             monsters.AddChild(node);
 
 
-            Sprite2D sprite = node as Sprite2D;
+            AnimatedSprite2D sprite = node as AnimatedSprite2D;
             if (sprite != null)
             {
                 sprite.Position = new Vector2(x, y);

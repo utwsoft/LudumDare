@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class zombie : Sprite2D
+public partial class zombie : AnimatedSprite2D
 {
 	float count = 0.0f;
 	bool on = false;
@@ -8,6 +8,7 @@ public partial class zombie : Sprite2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		this.Play();
 		SetLit(false);
 	}
 
