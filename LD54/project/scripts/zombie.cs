@@ -6,7 +6,7 @@ public partial class zombie : AnimatedSprite2D
 	bool on = false;
 
 	[Export]
-	float walkSpeed = 10.0f;
+	float walkSpeed = 0.0f;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
