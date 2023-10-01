@@ -57,4 +57,14 @@ public partial class Root : Node2D
 	public override void _Process(double delta)
 	{
 	}
+
+    public void OnArea2DInputEvent(Node viewport, InputEvent evt, int shape_idx)
+    {
+        var mouseEvt = evt as InputEventMouseButton;
+        if (mouseEvt != null && mouseEvt.Pressed && mouseEvt.ButtonIndex == MouseButton.Left)
+        {
+            GD.Print("Root clicked");
+            //this.Play("death");
+        }
+    }
 }

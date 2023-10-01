@@ -57,6 +57,7 @@ radius = 13.7846
 height = 65.6409
 
 [node name="ZombieRoot" type="AnimatedSprite2D"]
+y_sort_enabled = true
 texture_filter = 1
 material = ExtResource("1_jdqhc")
 position = Vector2(336.25, 262.5)

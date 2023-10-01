@@ -2,18 +2,34 @@
 
 [ext_resource type="Script" path="res://scripts/Root.cs" id="1_qjlnf"]
 [ext_resource type="Texture2D" uid="uid://bsyssh5vja4m4" path="res://sprites/ground_tile.png" id="1_vqo2d"]
-[ext_resource type="PackedScene" uid="uid://cu1bke8l1df1h" path="res://prefabs/spotlight.tscn" id="2_48vwn"]
 
-[sub_resource type="Gradient" id="Gradient_c75xy"]
-offsets = PackedFloat32Array(0.547101, 0.684783)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irerm"]
+size = Vector2(554, 891)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7sc2r"]
-gradient = SubResource("Gradient_c75xy")
-fill = 1
-fill_from = Vector2(0.491453, 0.478632)
+[sub_resource type="FontFile" id="FontFile_alfn5"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
+cache/0/32/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/32/0 = Vector2(0, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dy81f"]
+font = SubResource("FontFile_alfn5")
+font_size = 32
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
 
 [node name="root" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_qjlnf")
 
 [node name="groundplane" type="TextureRect" parent="."]
@@ -25,13 +41,6 @@ offset_bottom = 832.0
 texture = ExtResource("1_vqo2d")
 stretch_mode = 1
 
-[node name="lightPoint" parent="." instance=ExtResource("2_48vwn")]
-
-[node name="lightPoint2" type="PointLight2D" parent="."]
-position = Vector2(194, 354)
-scale = Vector2(3.10938, 2.125)
-texture = SubResource("GradientTexture2D_7sc2r")
-
 [node name="lightAtmo" type="DirectionalLight2D" parent="."]
 visible = false
 position = Vector2(298, 80)
@@ -40,3 +49,20 @@ blend_mode = 2
 shadow_color = Color(0, 0, 0, 0.0745098)
 
 [node name="monsters" type="Node2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(240, 400)
+shape = SubResource("RectangleShape2D_irerm")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 200.0
+offset_top = -4.0
+offset_right = 303.0
+offset_bottom = 57.0
+text = "0"
+label_settings = SubResource("LabelSettings_dy81f")
+horizontal_alignment = 1
+
+[connection signal="input_event" from="Area2D" to="." method="OnArea2DInputEvent"]

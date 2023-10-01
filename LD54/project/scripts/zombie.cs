@@ -5,6 +5,9 @@ public partial class zombie : AnimatedSprite2D
 	float count = 0.0f;
 	bool on = false;
 
+	[Export]
+	float walkSpeed = 10.0f;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -15,6 +18,11 @@ public partial class zombie : AnimatedSprite2D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		var pos = this.Position;
+		pos.Y += this.walkSpeed * (float)delta;
+
+		this.Position = pos;
+
 		//float fDelta = (float)delta;
 		//count += fDelta;
 
@@ -51,6 +59,8 @@ public partial class zombie : AnimatedSprite2D
 		if (this.Animation == "death")
 		{
 			GD.Print("Death anim finisehd");
+
+			QueueFree();
 		}
 	}
 }
