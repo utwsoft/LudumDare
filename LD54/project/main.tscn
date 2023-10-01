@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0fxmmodkwkk6"]
+[gd_scene load_steps=6 format=3 uid="uid://c0fxmmodkwkk6"]
 
 [ext_resource type="Script" path="res://scripts/Root.cs" id="1_qjlnf"]
 [ext_resource type="Texture2D" uid="uid://bsyssh5vja4m4" path="res://sprites/ground_tile.png" id="1_vqo2d"]
 [ext_resource type="PackedScene" uid="uid://cu1bke8l1df1h" path="res://prefabs/spotlight.tscn" id="2_48vwn"]
-[ext_resource type="PackedScene" uid="uid://diu46skdm373q" path="res://prefabs/Zombie.tscn" id="3_m2ux2"]
 
 [sub_resource type="Gradient" id="Gradient_c75xy"]
 offsets = PackedFloat32Array(0.547101, 0.684783)
@@ -34,14 +33,10 @@ scale = Vector2(3.10938, 2.125)
 texture = SubResource("GradientTexture2D_7sc2r")
 
 [node name="lightAtmo" type="DirectionalLight2D" parent="."]
+visible = false
 position = Vector2(298, 80)
 color = Color(0, 0, 0, 1)
 blend_mode = 2
 shadow_color = Color(0, 0, 0, 0.0745098)
 
 [node name="monsters" type="Node2D" parent="."]
-
-[node name="zombie" parent="monsters" instance=ExtResource("3_m2ux2")]
-position = Vector2(335, 296)
-frame_progress = 0.303335
-offset = Vector2(0, -60)

@@ -36,4 +36,21 @@ public partial class zombie : AnimatedSprite2D
             mat.LightMode = isLit ? CanvasItemMaterial.LightModeEnum.Unshaded : CanvasItemMaterial.LightModeEnum.Normal;
         }
     }
+
+	public void OnArea2DInputEvent(Node viewport, InputEvent evt, int shape_idx)
+	{
+		var mouseEvt = evt as InputEventMouseButton;
+		if (mouseEvt != null && mouseEvt.Pressed && mouseEvt.ButtonIndex == MouseButton.Left)
+		{
+			this.Play("death");
+		}
+	}
+
+	public void OnAnimFinished()
+	{
+		if (this.Animation == "death")
+		{
+			GD.Print("Death anim finisehd");
+		}
+	}
 }
