@@ -90,8 +90,11 @@ public partial class Root : Node2D
 
     private void MarkZombie(zombie z)
     {
-        Node2D spot = _spotlightScene.Instantiate() as Node2D;
-        this.AddChild(spot);
-        spot.Position = z.Position;
+        if (z != null)
+        {
+            Node2D spot = _spotlightScene.Instantiate() as Node2D;
+            z.AddChild(spot);
+            spot.Position = Vector2.Zero;
+        }
     }
 }

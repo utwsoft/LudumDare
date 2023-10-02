@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0fxmmodkwkk6"]
+[gd_scene load_steps=6 format=3 uid="uid://c0fxmmodkwkk6"]
 
 [ext_resource type="Script" path="res://scripts/Root.cs" id="1_qjlnf"]
 [ext_resource type="Texture2D" uid="uid://bsyssh5vja4m4" path="res://sprites/ground_tile.png" id="1_vqo2d"]
-[ext_resource type="PackedScene" uid="uid://diu46skdm373q" path="res://prefabs/Zombie.tscn" id="3_m2ux2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irerm"]
 size = Vector2(554, 891)
@@ -65,7 +64,5 @@ offset_bottom = 57.0
 text = "0"
 label_settings = SubResource("LabelSettings_dy81f")
 horizontal_alignment = 1
-
-[node name="ZombieRoot" parent="." instance=ExtResource("3_m2ux2")]
 
 [connection signal="input_event" from="Area2D" to="." method="OnArea2DInputEvent"]
