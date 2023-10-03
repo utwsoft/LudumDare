@@ -45,12 +45,27 @@ public partial class zombie : AnimatedSprite2D
         }
     }
 
+	public void SetWalkSpeed(float walkSpeed)
+	{
+		this.walkSpeed = walkSpeed;
+	}
+
 	public void OnArea2DInputEvent(Node viewport, InputEvent evt, int shape_idx)
 	{
 		var mouseEvt = evt as InputEventMouseButton;
 		if (mouseEvt != null && mouseEvt.Pressed && mouseEvt.ButtonIndex == MouseButton.Left)
 		{
 			this.Play("death");
+
+			var root = GetTree().Root.GetNode("root");
+			if (root != null)
+			{
+				Root r = root as Root;
+				if (r != null)
+				{
+                    r.KillZombie(this);
+                }
+			}
 		}
 	}
 
@@ -58,7 +73,7 @@ public partial class zombie : AnimatedSprite2D
 	{
 		if (this.Animation == "death")
 		{
-			GD.Print("Death anim finisehd");
+			GD.Print("Death anim finished");
 
 			QueueFree();
 		}

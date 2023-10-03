@@ -28,11 +28,15 @@ font_size = 32
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
-[node name="root" type="Node2D"]
-y_sort_enabled = true
+[node name="root" type="Node2D" node_paths=PackedStringArray("Timer", "KillCount")]
 script = ExtResource("1_qjlnf")
+Timer = NodePath("CanvasLayer/Timer")
+KillCount = NodePath("CanvasLayer/Score")
 
-[node name="groundplane" type="TextureRect" parent="."]
+[node name="world" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="groundplane" type="TextureRect" parent="world"]
 texture_filter = 1
 offset_left = -11.0
 offset_top = -11.0
@@ -41,28 +45,37 @@ offset_bottom = 832.0
 texture = ExtResource("1_vqo2d")
 stretch_mode = 1
 
-[node name="lightAtmo" type="DirectionalLight2D" parent="."]
-visible = false
+[node name="lightAtmo" type="DirectionalLight2D" parent="world"]
 position = Vector2(298, 80)
 color = Color(0, 0, 0, 1)
 blend_mode = 2
 shadow_color = Color(0, 0, 0, 0.0745098)
 
-[node name="monsters" type="Node2D" parent="."]
+[node name="monsters" type="Node2D" parent="world"]
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Area2D" type="Area2D" parent="world"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/Area2D"]
 position = Vector2(240, 400)
 shape = SubResource("RectangleShape2D_irerm")
 
-[node name="Label" type="Label" parent="."]
-offset_left = 200.0
-offset_top = -4.0
-offset_right = 303.0
-offset_bottom = 57.0
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Timer" type="Label" parent="CanvasLayer"]
+offset_left = 21.0
+offset_top = 5.0
+offset_right = 96.0
+offset_bottom = 54.0
+text = "1:00"
+label_settings = SubResource("LabelSettings_dy81f")
+
+[node name="Score" type="Label" parent="CanvasLayer"]
+offset_left = 371.0
+offset_top = 6.0
+offset_right = 474.0
+offset_bottom = 55.0
 text = "0"
 label_settings = SubResource("LabelSettings_dy81f")
 horizontal_alignment = 1
 
-[connection signal="input_event" from="Area2D" to="." method="OnArea2DInputEvent"]
+[connection signal="input_event" from="world/Area2D" to="." method="OnArea2DInputEvent"]
