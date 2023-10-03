@@ -15,6 +15,16 @@ public partial class zombie : AnimatedSprite2D
 		SetLit(false);
 	}
 
+	public void ActivateCollision(bool activated)
+	{
+		var area = this.GetChild(0) as Area2D;
+        if (area != null)
+        {
+			area.SetProcess(activated);
+        }
+
+    }
+
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
@@ -38,6 +48,8 @@ public partial class zombie : AnimatedSprite2D
 
 	public void SetLit(bool isLit)
 	{
+		ActivateCollision(isLit);
+
         var mat = this.Material as CanvasItemMaterial;
         if (mat != null)
         {
@@ -58,6 +70,8 @@ public partial class zombie : AnimatedSprite2D
 			this.Play("death");
 
 			this.walkSpeed = 0.0f;
+
+			ActivateCollision(false);
 
 			var root = GetTree().Root.GetNode("root");
 			if (root != null)
