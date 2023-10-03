@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0fxmmodkwkk6"]
+[gd_scene load_steps=7 format=3 uid="uid://c0fxmmodkwkk6"]
 
 [ext_resource type="Script" path="res://scripts/Root.cs" id="1_qjlnf"]
 [ext_resource type="Texture2D" uid="uid://bsyssh5vja4m4" path="res://sprites/ground_tile.png" id="1_vqo2d"]
@@ -14,6 +14,10 @@ cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
 cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 cache/0/16/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/72/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/96/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/120/0 = Vector2(0, 0)
+cache/0/16/0/kerning_overrides/200/0 = Vector2(0, 0)
 cache/0/32/0/ascent = 0.0
 cache/0/32/0/descent = 0.0
 cache/0/32/0/underline_position = 0.0
@@ -21,6 +25,54 @@ cache/0/32/0/underline_thickness = 0.0
 cache/0/32/0/scale = 1.0
 cache/0/32/0/kerning_overrides/16/0 = Vector2(0, 0)
 cache/0/32/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/72/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/96/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/120/0 = Vector2(0, 0)
+cache/0/32/0/kerning_overrides/200/0 = Vector2(0, 0)
+cache/0/72/0/ascent = 0.0
+cache/0/72/0/descent = 0.0
+cache/0/72/0/underline_position = 0.0
+cache/0/72/0/underline_thickness = 0.0
+cache/0/72/0/scale = 1.0
+cache/0/72/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/72/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/72/0/kerning_overrides/72/0 = Vector2(0, 0)
+cache/0/72/0/kerning_overrides/96/0 = Vector2(0, 0)
+cache/0/72/0/kerning_overrides/120/0 = Vector2(0, 0)
+cache/0/72/0/kerning_overrides/200/0 = Vector2(0, 0)
+cache/0/96/0/ascent = 0.0
+cache/0/96/0/descent = 0.0
+cache/0/96/0/underline_position = 0.0
+cache/0/96/0/underline_thickness = 0.0
+cache/0/96/0/scale = 1.0
+cache/0/96/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/96/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/96/0/kerning_overrides/72/0 = Vector2(0, 0)
+cache/0/96/0/kerning_overrides/96/0 = Vector2(0, 0)
+cache/0/96/0/kerning_overrides/120/0 = Vector2(0, 0)
+cache/0/96/0/kerning_overrides/200/0 = Vector2(0, 0)
+cache/0/120/0/ascent = 0.0
+cache/0/120/0/descent = 0.0
+cache/0/120/0/underline_position = 0.0
+cache/0/120/0/underline_thickness = 0.0
+cache/0/120/0/scale = 1.0
+cache/0/120/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/120/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/120/0/kerning_overrides/72/0 = Vector2(0, 0)
+cache/0/120/0/kerning_overrides/96/0 = Vector2(0, 0)
+cache/0/120/0/kerning_overrides/120/0 = Vector2(0, 0)
+cache/0/120/0/kerning_overrides/200/0 = Vector2(0, 0)
+cache/0/200/0/ascent = 0.0
+cache/0/200/0/descent = 0.0
+cache/0/200/0/underline_position = 0.0
+cache/0/200/0/underline_thickness = 0.0
+cache/0/200/0/scale = 1.0
+cache/0/200/0/kerning_overrides/16/0 = Vector2(0, 0)
+cache/0/200/0/kerning_overrides/32/0 = Vector2(0, 0)
+cache/0/200/0/kerning_overrides/72/0 = Vector2(0, 0)
+cache/0/200/0/kerning_overrides/96/0 = Vector2(0, 0)
+cache/0/200/0/kerning_overrides/120/0 = Vector2(0, 0)
+cache/0/200/0/kerning_overrides/200/0 = Vector2(0, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_dy81f"]
 font = SubResource("FontFile_alfn5")
@@ -28,10 +80,17 @@ font_size = 32
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
-[node name="root" type="Node2D" node_paths=PackedStringArray("Timer", "KillCount")]
+[sub_resource type="LabelSettings" id="LabelSettings_nrx44"]
+font = SubResource("FontFile_alfn5")
+font_size = 200
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="root" type="Node2D" node_paths=PackedStringArray("Timer", "KillCount", "FinalCount")]
 script = ExtResource("1_qjlnf")
 Timer = NodePath("CanvasLayer/Timer")
 KillCount = NodePath("CanvasLayer/Score")
+FinalCount = NodePath("CanvasLayer/FinalScore")
 
 [node name="world" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -77,5 +136,23 @@ offset_bottom = 55.0
 text = "0"
 label_settings = SubResource("LabelSettings_dy81f")
 horizontal_alignment = 1
+
+[node name="FinalScore" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -119.0
+offset_top = -109.0
+offset_right = 121.0
+offset_bottom = 108.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_nrx44")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="input_event" from="world/Area2D" to="." method="OnArea2DInputEvent"]

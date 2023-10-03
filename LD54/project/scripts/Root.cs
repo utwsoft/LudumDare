@@ -12,16 +12,23 @@ public partial class Root : Node2D
     [Export]
     public Label KillCount;
 
+    [Export]
+    public Label FinalCount;
+
     private int _countDown;
 
     private float _secondCounter;
 
     private int _killCount;
 
+    private bool _isFinalCountDisplay;
+
     // Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        _countDown = 60;
+        _isFinalCountDisplay = false;
+
+        _countDown = 15;
 
         _killCount = 0;
 
@@ -32,12 +39,22 @@ public partial class Root : Node2D
         _zombieScene = GD.Load<PackedScene>("res://prefabs/Zombie.tscn");
         _spotlightScene = GD.Load<PackedScene>("res://prefabs/spotlight.tscn");
 
+        CreateRandomSpawnZombies();
+
+        UpdateTimerLabel();
+    }
+
+    private void CreateRandomSpawnZombies()
+    {
         for (int i = 0; i < 10; ++i)
         {
             CreateZombie(_rng.RandiRange(32, 448), _rng.RandiRange(64, 740));
         }
+    }
 
-        UpdateTimerLabel();
+    private Node2D GetMonstersNode()
+    {
+        return GetNode<Node2D>("world/monsters");
     }
 
 	private void CreateZombie(int x, int y)
@@ -49,7 +66,7 @@ public partial class Root : Node2D
 
         node.Name = "zombie";
 
-        Node2D monsters = GetNode<Node2D>("world/monsters");
+        Node2D monsters = GetMonstersNode();
         if (monsters != null)
         {
             monsters.AddChild(node);
@@ -82,13 +99,35 @@ public partial class Root : Node2D
 	{
         _secondCounter += (float)delta;
 
-        if (_secondCounter >= 1.0f)
+        if (!_isFinalCountDisplay)
         {
-            _secondCounter = 0.0f;
+            if (_secondCounter >= 1.0f)
+            {
+                _secondCounter = 0.0f;
 
-            _countDown--;
+                _countDown--;
 
-            UpdateTimerLabel();
+                UpdateTimerLabel();
+
+
+                if (_countDown < 0)
+                {
+                    KillCount.Visible = false;
+                    Timer.Visible = false;
+                    FinalCount.Visible = true;
+
+                    _isFinalCountDisplay = true;
+
+                    UpdateFinalCountLabel();
+                }
+            }
+        }
+        else
+        {
+            if (_secondCounter >= 2.0f)
+            {
+                Reset();
+            }
         }
 	}
 
@@ -115,6 +154,16 @@ public partial class Root : Node2D
         }
     }
 
+    private void UpdateFinalCountLabel()
+    {
+        string killCountStr = $"{_killCount}";
+
+        if (FinalCount != null)
+        {
+            FinalCount.Text = killCountStr;
+        }
+    }
+
     public void OnArea2DInputEvent(Node viewport, InputEvent evt, int shape_idx)
     {
         var mouseEvt = evt as InputEventMouseButton;
@@ -129,7 +178,7 @@ public partial class Root : Node2D
 
     private zombie SelectRandomZombie()
     {
-        Node2D monsters = GetNode<Node2D>("world/monsters");
+        Node2D monsters = GetMonstersNode();
         if (monsters != null)
         {
             int count = monsters.GetChildCount();
@@ -159,5 +208,33 @@ public partial class Root : Node2D
         _killCount++;
 
         UpdateKillCountLabel();
+    }
+
+    private void Reset()
+    {
+        CreateRandomSpawnZombies();
+
+        _isFinalCountDisplay = false;
+        _countDown = 15;
+
+        _killCount = 0;
+
+        var monsters = GetMonstersNode();
+
+        foreach (var monster in monsters.GetChildren())
+        {
+            monsters.RemoveChild(monster);
+            monster.QueueFree();
+        }
+
+        if (FinalCount != null)
+        {
+            KillCount.Visible = true;
+            Timer.Visible = true;
+            FinalCount.Visible = false;
+        }
+
+        UpdateKillCountLabel();
+        UpdateTimerLabel();
     }
 }

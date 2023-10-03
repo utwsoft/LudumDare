@@ -57,6 +57,8 @@ public partial class zombie : AnimatedSprite2D
 		{
 			this.Play("death");
 
+			this.walkSpeed = 0.0f;
+
 			var root = GetTree().Root.GetNode("root");
 			if (root != null)
 			{
