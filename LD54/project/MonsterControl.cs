@@ -100,13 +100,7 @@ public partial class MonsterControl : Node2D
         {
             z.SetWalkSpeed(10.0f);
 
-            Material mat = GD.Load<Material>("res://materials/MonsterMat.material");
-            if (mat != null)
-            {
-                var matInstance = mat.Duplicate();
-                z.Material = matInstance as Material;
-                z.SetLit(false);
-            }
+            z.SetLit(false);
         }
     }
 

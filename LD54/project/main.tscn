@@ -112,15 +112,16 @@ blend_mode = 2
 shadow_color = Color(0, 0, 0, 0.0745098)
 
 [node name="monsters" type="Node2D" parent="world"]
+y_sort_enabled = true
 script = ExtResource("3_0oxgx")
 TotalDistributionWidth = 480
 TotalDistributionHeight = 800
 NumRows = 4
 NumCols = 3
 
-[node name="Area2D" type="Area2D" parent="world"]
+[node name="WorldCollider" type="Area2D" parent="world"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="world/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="world/WorldCollider"]
 position = Vector2(240, 400)
 shape = SubResource("RectangleShape2D_irerm")
 
@@ -161,4 +162,4 @@ label_settings = SubResource("LabelSettings_nrx44")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="input_event" from="world/Area2D" to="." method="OnArea2DInputEvent"]
+[connection signal="input_event" from="world/WorldCollider" to="." method="OnArea2DInputEvent"]

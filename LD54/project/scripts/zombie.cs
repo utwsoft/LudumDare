@@ -53,6 +53,11 @@ public partial class zombie : AnimatedSprite2D
 		SelfModulate = _isLit ? new Color(1.0f, 1.0f, 1.0f) : new Color(0.0f, 0.0f, 0.0f);
     }
 
+	public bool IsLit()
+	{
+		return _isLit;
+	}
+
 	public void SetWalkSpeed(float walkSpeed)
 	{
 		this.walkSpeed = walkSpeed;

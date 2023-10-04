@@ -155,20 +155,23 @@ public partial class Root : Node2D
     {
         if (z != null)
         {
-            if (active)
+            if (active && !z.IsLit())
             {
                 Node2D spot = _spotlightScene.Instantiate() as Node2D;
+                spot.Name = "spot";
                 z.AddChild(spot);
                 spot.Position = Vector2.Zero;
+                z.SetLit(active);
             }
-            else
+            else if (!active && z.IsLit())
             {
-                var first = z.GetChild(0);
-                z.RemoveChild(first);
-                first.QueueFree();
+                var light = z.GetNode("./spot");
+                z.RemoveChild(light);
+                light.QueueFree();
+                z.SetLit(active);
             }
 
-            z.SetLit(active);
+            
         }
     }
 
