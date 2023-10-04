@@ -6,6 +6,8 @@ public partial class Root : Node2D
     private PackedScene _zombieScene;
     private PackedScene _spotlightScene;
 
+
+
     [Export]
     public Label Timer;
 
@@ -39,59 +41,16 @@ public partial class Root : Node2D
         _zombieScene = GD.Load<PackedScene>("res://prefabs/Zombie.tscn");
         _spotlightScene = GD.Load<PackedScene>("res://prefabs/spotlight.tscn");
 
-        CreateRandomSpawnZombies();
+        MonsterControl node = GetMonstersNode() as MonsterControl;
+        node.Init(_rng);
+        node.OnMarkZombie += MarkZombie;
 
         UpdateTimerLabel();
-    }
-
-    private void CreateRandomSpawnZombies()
-    {
-        for (int i = 0; i < 10; ++i)
-        {
-            CreateZombie(_rng.RandiRange(32, 448), _rng.RandiRange(64, 740));
-        }
     }
 
     private Node2D GetMonstersNode()
     {
         return GetNode<Node2D>("world/monsters");
-    }
-
-	private void CreateZombie(int x, int y)
-	{
-        if (_zombieScene == null)
-            return;
-
-        var node = _zombieScene.Instantiate();
-
-        node.Name = "zombie";
-
-        Node2D monsters = GetMonstersNode();
-        if (monsters != null)
-        {
-            monsters.AddChild(node);
-
-
-            AnimatedSprite2D sprite = node as AnimatedSprite2D;
-            if (sprite != null)
-            {
-                sprite.Position = new Vector2(x, y);
-            }
-
-            zombie z = node as zombie;
-            if (z != null)
-            {
-                z.SetWalkSpeed(10.0f);
-
-                Material mat = GD.Load<Material>("res://materials/MonsterMat.material");
-                if (mat != null)
-                {
-                    var matInstance = mat.Duplicate();
-                    z.Material = matInstance as Material;
-                    z.SetLit(false);
-                }
-            }
-        }
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -171,8 +130,8 @@ public partial class Root : Node2D
         {
             GD.Print("Root clicked");
 
-            zombie z = SelectRandomZombie();
-            MarkZombie(z);
+            //zombie z = SelectRandomZombie();
+            //MarkZombie(z);
         }
     }
 
@@ -192,14 +151,24 @@ public partial class Root : Node2D
         return null;
     }
 
-    private void MarkZombie(zombie z)
+    private void MarkZombie(zombie z, bool active)
     {
         if (z != null)
         {
-            Node2D spot = _spotlightScene.Instantiate() as Node2D;
-            z.AddChild(spot);
-            spot.Position = Vector2.Zero;
-            z.SetLit(true);
+            if (active)
+            {
+                Node2D spot = _spotlightScene.Instantiate() as Node2D;
+                z.AddChild(spot);
+                spot.Position = Vector2.Zero;
+            }
+            else
+            {
+                var first = z.GetChild(0);
+                z.RemoveChild(first);
+                first.QueueFree();
+            }
+
+            z.SetLit(active);
         }
     }
 
@@ -212,8 +181,6 @@ public partial class Root : Node2D
 
     private void Reset()
     {
-        CreateRandomSpawnZombies();
-
         _isFinalCountDisplay = false;
         _countDown = 15;
 

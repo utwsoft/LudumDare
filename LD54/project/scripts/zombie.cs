@@ -8,11 +8,18 @@ public partial class zombie : AnimatedSprite2D
 	[Export]
 	float walkSpeed = 0.0f;
 
+	bool _isLit = false;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		this.Play("default");
-		SetLit(false);
+
+		SelfModulate = new Color(0.0f, 0.0f, 0.0f);
+
+		_isLit = false;
+		SetLit(_isLit);
+		ActivateCollision(_isLit);
 	}
 
 	public void ActivateCollision(bool activated)
@@ -32,29 +39,18 @@ public partial class zombie : AnimatedSprite2D
 		pos.Y += this.walkSpeed * (float)delta;
 
 		this.Position = pos;
-
-		//float fDelta = (float)delta;
-		//count += fDelta;
-
-		//if (count >= 1.0f)
-		//{
-		//	count = 0.0f;
-
-		//	on = !on;
-
-		//	SetLit(on);
-		//}
 	}
 
 	public void SetLit(bool isLit)
 	{
-		ActivateCollision(isLit);
+		if (_isLit == isLit)
+			return;
 
-        var mat = this.Material as CanvasItemMaterial;
-        if (mat != null)
-        {
-            mat.LightMode = isLit ? CanvasItemMaterial.LightModeEnum.Unshaded : CanvasItemMaterial.LightModeEnum.Normal;
-        }
+		_isLit = isLit;
+
+		ActivateCollision(_isLit);
+
+		SelfModulate = _isLit ? new Color(1.0f, 1.0f, 1.0f) : new Color(0.0f, 0.0f, 0.0f);
     }
 
 	public void SetWalkSpeed(float walkSpeed)

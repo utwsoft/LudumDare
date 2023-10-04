@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0fxmmodkwkk6"]
+[gd_scene load_steps=8 format=3 uid="uid://c0fxmmodkwkk6"]
 
 [ext_resource type="Script" path="res://scripts/Root.cs" id="1_qjlnf"]
 [ext_resource type="Texture2D" uid="uid://bsyssh5vja4m4" path="res://sprites/ground_tile.png" id="1_vqo2d"]
+[ext_resource type="Script" path="res://MonsterControl.cs" id="3_0oxgx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irerm"]
 size = Vector2(554, 891)
@@ -111,6 +112,11 @@ blend_mode = 2
 shadow_color = Color(0, 0, 0, 0.0745098)
 
 [node name="monsters" type="Node2D" parent="world"]
+script = ExtResource("3_0oxgx")
+TotalDistributionWidth = 480
+TotalDistributionHeight = 800
+NumRows = 4
+NumCols = 3
 
 [node name="Area2D" type="Area2D" parent="world"]
 
