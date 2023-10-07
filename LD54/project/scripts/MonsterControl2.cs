@@ -183,4 +183,14 @@ public partial class MonsterControl2 : Node2D
 
         UpdateLights((float)delta);
 	}
+
+    public void DisableAllColliders()
+    {
+        List<Spawner> occupied = GetOccupiedSpawners();
+        foreach (Spawner spawner in occupied)
+        {
+            Zombie z = spawner.GetZombie();
+            z.ActivateCollision(false);
+        }
+    }
 }

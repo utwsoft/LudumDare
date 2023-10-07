@@ -16,6 +16,12 @@ public partial class Root : Node2D
     [Export]
     public Label FinalCount;
 
+    [Export]
+    private SpawnSystem _spawner;
+
+    [Export]
+    private MonsterControl2 _monsterControl;
+
     private int _countDown;
 
     private float _secondCounter;
@@ -71,6 +77,8 @@ public partial class Root : Node2D
 
                 if (_countDown < 0)
                 {
+                    _monsterControl.DisableAllColliders();
+
                     KillCount.Visible = false;
                     Timer.Visible = false;
                     FinalCount.Visible = true;
@@ -189,13 +197,8 @@ public partial class Root : Node2D
 
         _killCount = 0;
 
-        var monsters = GetMonstersNode();
 
-        foreach (var monster in monsters.GetChildren())
-        {
-            monsters.RemoveChild(monster);
-            monster.QueueFree();
-        }
+        _spawner.Reset();
 
         if (FinalCount != null)
         {

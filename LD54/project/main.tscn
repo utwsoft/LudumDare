@@ -88,11 +88,13 @@ font_size = 200
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
-[node name="root" type="Node2D" node_paths=PackedStringArray("Timer", "KillCount", "FinalCount")]
+[node name="root" type="Node2D" node_paths=PackedStringArray("Timer", "KillCount", "FinalCount", "_spawner", "_monsterControl")]
 script = ExtResource("1_qjlnf")
 Timer = NodePath("CanvasLayer/Timer")
 KillCount = NodePath("CanvasLayer/Score")
 FinalCount = NodePath("CanvasLayer/FinalScore")
+_spawner = NodePath("world/SpawnSystem")
+_monsterControl = NodePath("world/monsters")
 
 [node name="world" type="Node2D" parent="."]
 y_sort_enabled = true
