@@ -109,6 +109,8 @@ public partial class MonsterControl : Node2D
 	{
         _spawnTimer += (float)delta;
 
+        return;
+
         if (_spawnTimer >= _spawnTime)
         {
             _spawnTimer = 0.0f;

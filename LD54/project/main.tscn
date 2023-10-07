@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0fxmmodkwkk6"]
+[gd_scene load_steps=9 format=3 uid="uid://c0fxmmodkwkk6"]
 
 [ext_resource type="Script" path="res://scripts/Root.cs" id="1_qjlnf"]
 [ext_resource type="Texture2D" uid="uid://bsyssh5vja4m4" path="res://sprites/ground_tile.png" id="1_vqo2d"]
-[ext_resource type="Script" path="res://MonsterControl.cs" id="3_0oxgx"]
+[ext_resource type="Script" path="res://scripts/SpawnSystem.cs" id="3_55seu"]
+[ext_resource type="Script" path="res://scripts/MonsterControl2.cs" id="4_2petn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irerm"]
 size = Vector2(554, 891)
@@ -105,19 +106,26 @@ offset_bottom = 832.0
 texture = ExtResource("1_vqo2d")
 stretch_mode = 1
 
+[node name="SpawnSystem" type="Node2D" parent="world"]
+y_sort_enabled = true
+script = ExtResource("3_55seu")
+TotalDistributionWidth = 480
+TotalDistributionHeight = 800
+NumRows = 9
+NumCols = 5
+ScrollDownSpeed = 10.0
+
 [node name="lightAtmo" type="DirectionalLight2D" parent="world"]
+visible = false
 position = Vector2(298, 80)
 color = Color(0, 0, 0, 1)
 blend_mode = 2
 shadow_color = Color(0, 0, 0, 0.0745098)
 
-[node name="monsters" type="Node2D" parent="world"]
+[node name="monsters" type="Node2D" parent="world" node_paths=PackedStringArray("_spawner")]
 y_sort_enabled = true
-script = ExtResource("3_0oxgx")
-TotalDistributionWidth = 480
-TotalDistributionHeight = 800
-NumRows = 4
-NumCols = 3
+script = ExtResource("4_2petn")
+_spawner = NodePath("../SpawnSystem")
 
 [node name="WorldCollider" type="Area2D" parent="world"]
 

@@ -92,6 +92,12 @@ public partial class zombie : AnimatedSprite2D
 		{
 			GD.Print("Death anim finished");
 
+			Spawner s = this.GetParent() as Spawner;
+			if (s != null)
+			{
+				s.Evacuate();
+			}
+
 			QueueFree();
 		}
 	}

@@ -7,7 +7,6 @@ public partial class Root : Node2D
     private PackedScene _spotlightScene;
 
 
-
     [Export]
     public Label Timer;
 
@@ -41,8 +40,9 @@ public partial class Root : Node2D
         _zombieScene = GD.Load<PackedScene>("res://prefabs/Zombie.tscn");
         _spotlightScene = GD.Load<PackedScene>("res://prefabs/spotlight.tscn");
 
-        MonsterControl node = GetMonstersNode() as MonsterControl;
-        node.Init(_rng);
+
+        MonsterControl2 node = GetMonstersNode() as MonsterControl2;
+        //node.Init(_rng);
         node.OnMarkZombie += MarkZombie;
 
         UpdateTimerLabel();
@@ -57,6 +57,8 @@ public partial class Root : Node2D
 	public override void _Process(double delta)
 	{
         _secondCounter += (float)delta;
+
+        return;
 
         if (!_isFinalCountDisplay)
         {
