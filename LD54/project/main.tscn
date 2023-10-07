@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0fxmmodkwkk6"]
+[gd_scene load_steps=10 format=3 uid="uid://c0fxmmodkwkk6"]
 
 [ext_resource type="Script" path="res://scripts/Root.cs" id="1_qjlnf"]
 [ext_resource type="Texture2D" uid="uid://bsyssh5vja4m4" path="res://sprites/ground_tile.png" id="1_vqo2d"]
@@ -120,9 +120,17 @@ font_size = 32
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="FontFile" id="FontFile_11bwy"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
 [sub_resource type="LabelSettings" id="LabelSettings_nrx44"]
-font = SubResource("FontFile_alfn5")
-font_size = 600
+font = SubResource("FontFile_11bwy")
+font_size = 400
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
