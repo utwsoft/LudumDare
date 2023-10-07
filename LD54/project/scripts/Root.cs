@@ -45,7 +45,7 @@ public partial class Root : Node2D
 	{
         _isFinalCountDisplay = false;
 
-        _countDown = 15;
+        _countDown = 30;
 
         _killCount = 0;
 
@@ -242,7 +242,8 @@ public partial class Root : Node2D
     private void Reset()
     {
         _isFinalCountDisplay = false;
-        _countDown = 15;
+        _secondCounter = 0.0f;
+        _countDown = 30;
 
         _killCount = 0;
 
