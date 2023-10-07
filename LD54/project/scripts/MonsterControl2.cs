@@ -24,6 +24,13 @@ public partial class MonsterControl2 : Node2D
 
     private bool _lightsOn;
 
+    private AudioStreamPlayer _zombies;
+
+    private AudioStreamPlayer _audio;
+
+    private AudioStream _lightsOnSound;
+    private AudioStream _lightsOffSound;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -35,7 +42,33 @@ public partial class MonsterControl2 : Node2D
 
         _zombieScene = GD.Load<PackedScene>("res://prefabs/Zombie.tscn");
 
+        _lightsOnSound = GD.Load<AudioStream>("res://sounds/486536__pitchedsenses__light-heavy-lights-turned-on.wav");
+        _lightsOffSound = GD.Load<AudioStream>("res://sounds/131599__echocinematics__kill-switch-large-breaker-switch2.wav");
+
         Init(new RandomNumberGenerator());
+
+        _audio = new AudioStreamPlayer();
+        AddChild(_audio);
+
+        _zombies = new AudioStreamPlayer();
+        AddChild(_zombies);
+
+        var zombieSound = GD.Load<AudioStream>("res://sounds/559558__chuckchuckgoof__zombie-groan.wav");
+        _zombies.Stream = zombieSound;
+        
+        _zombies.Play();
+    }
+
+    private void PlayLightsOn()
+    {
+        _audio.Stream = _lightsOnSound;
+        _audio.Play();
+    }
+
+    private void PlayLightsOff()
+    {
+        _audio.Stream = _lightsOffSound;
+        _audio.Play();
     }
 
 	public void Init(RandomNumberGenerator rng)
@@ -136,6 +169,8 @@ public partial class MonsterControl2 : Node2D
 
             if (_lightsOn)
             {
+                PlayLightsOn();
+
                 HashSet<int> indices = new HashSet<int>();
                 int onCount = _rng.RandiRange(4, 8);
                 while (onCount > 0)
@@ -156,6 +191,8 @@ public partial class MonsterControl2 : Node2D
             }
             else
             {
+                PlayLightsOff();
+
                 foreach (Spawner child in occupiedSpawners)
                 {
                     Zombie z = child.GetZombie();

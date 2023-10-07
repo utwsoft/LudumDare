@@ -31,6 +31,14 @@ public partial class Root : Node2D
 
     private bool _isFinalCountDisplay;
 
+    private AudioStream _powSound;
+    private AudioStream _wooshSound;
+    private AudioStream _bellSound;
+
+    private AudioStreamPlayer _powPlayer;
+    private AudioStreamPlayer _wooshPlayer;
+    private AudioStreamPlayer _bellPlayer;
+
     // Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -54,6 +62,21 @@ public partial class Root : Node2D
         node.OnMarkZombie += MarkZombie;
 
         UpdateTimerLabel();
+
+        _powSound = GD.Load<AudioStream>("res://sounds/563356__nicholasdaryl__cartoonpunch.wav");
+        _wooshSound = GD.Load<AudioStream>("res://sounds/420668__sypherzent__basic-melee-swing-miss-whoosh.wav");
+        _bellSound = GD.Load<AudioStream>("res://sounds/530340__wesleyextreme_gamer__scary-bell-sound.wav");
+        _wooshPlayer = new AudioStreamPlayer();
+        _wooshPlayer.Stream = _wooshSound;
+        AddChild(_wooshPlayer);
+        _powPlayer = new AudioStreamPlayer();
+        _powPlayer.Stream = _powSound;
+        AddChild(_powPlayer);
+
+        _bellPlayer = new AudioStreamPlayer();
+        _bellPlayer.Stream = _bellSound;
+        AddChild(_bellPlayer);
+
     }
 
     private Node2D GetMonstersNode()
@@ -79,6 +102,8 @@ public partial class Root : Node2D
 
                 if (_countDown < 0)
                 {
+                    _bellPlayer.Play();
+
                     _monsterControl.DisableAllColliders();
 
                     KillCount.Visible = false;
@@ -142,6 +167,8 @@ public partial class Root : Node2D
 
             //Zombie z = SelectRandomZombie();
             //MarkZombie(z);
+
+            _wooshPlayer.Play();
         }
     }
 
@@ -187,6 +214,8 @@ public partial class Root : Node2D
 
     public void KillZombie(Node2D zombie)
     {
+        _powPlayer.Play();
+
         Node2D pow = _powScene.Instantiate() as Node2D;
 
         Vector2 mousePos = GetViewport().GetMousePosition();
