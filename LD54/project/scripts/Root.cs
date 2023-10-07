@@ -58,8 +58,6 @@ public partial class Root : Node2D
 	{
         _secondCounter += (float)delta;
 
-        return;
-
         if (!_isFinalCountDisplay)
         {
             if (_secondCounter >= 1.0f)
