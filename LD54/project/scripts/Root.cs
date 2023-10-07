@@ -6,6 +6,7 @@ public partial class Root : Node2D
     private PackedScene _zombieScene;
     private PackedScene _spotlightScene;
     private PackedScene _powScene;
+    private PackedScene _slashScene;
 
 
     [Export]
@@ -55,6 +56,7 @@ public partial class Root : Node2D
         _zombieScene = GD.Load<PackedScene>("res://prefabs/Zombie.tscn");
         _spotlightScene = GD.Load<PackedScene>("res://prefabs/spotlight.tscn");
         _powScene = GD.Load<PackedScene>("res://prefabs/pow.tscn");
+        _slashScene = GD.Load<PackedScene>("res://prefabs/slash.tscn");
 
 
         MonsterControl2 node = GetMonstersNode() as MonsterControl2;
@@ -165,8 +167,16 @@ public partial class Root : Node2D
         {
             GD.Print("Root clicked");
 
-            //Zombie z = SelectRandomZombie();
-            //MarkZombie(z);
+            Node2D slash = _slashScene.Instantiate() as Node2D;
+            AddChild(slash);
+
+            uint bin = _rng.Randi() % 2;
+
+            float hScale = (bin == 0) ? 1.0f : -1.0f;
+
+            slash.Scale = new Vector2(hScale, 1.0f);
+
+            slash.Position = mouseEvt.Position;
 
             _wooshPlayer.Play();
         }
@@ -207,8 +217,6 @@ public partial class Root : Node2D
                 light.QueueFree();
                 z.SetLit(active);
             }
-
-            
         }
     }
 

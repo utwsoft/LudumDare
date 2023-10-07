@@ -175,7 +175,7 @@ public partial class MonsterControl2 : Node2D
                 int onCount = _rng.RandiRange(4, 8);
                 while (onCount > 0)
                 {
-                    indices.Add(_rng.RandiRange(0, occupiedSpawners.Count));
+                    indices.Add(_rng.RandiRange(0, occupiedSpawners.Count - 1));
                     onCount--;
                 }
 
