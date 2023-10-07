@@ -5,6 +5,7 @@ public partial class Root : Node2D
     private RandomNumberGenerator _rng;
     private PackedScene _zombieScene;
     private PackedScene _spotlightScene;
+    private PackedScene _powScene;
 
 
     [Export]
@@ -45,6 +46,7 @@ public partial class Root : Node2D
 
         _zombieScene = GD.Load<PackedScene>("res://prefabs/Zombie.tscn");
         _spotlightScene = GD.Load<PackedScene>("res://prefabs/spotlight.tscn");
+        _powScene = GD.Load<PackedScene>("res://prefabs/pow.tscn");
 
 
         MonsterControl2 node = GetMonstersNode() as MonsterControl2;
@@ -183,8 +185,18 @@ public partial class Root : Node2D
         }
     }
 
-    public void KillZombie(Node2D Zombie)
+    public void KillZombie(Node2D zombie)
     {
+        Node2D pow = _powScene.Instantiate() as Node2D;
+
+        Vector2 mousePos = GetViewport().GetMousePosition();
+
+        if ( pow != null )
+        {
+            this.AddChild(pow);
+            pow.Position = mousePos;
+        }
+
         _killCount++;
 
         UpdateKillCountLabel();
