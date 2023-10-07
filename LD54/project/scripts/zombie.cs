@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class zombie : AnimatedSprite2D
+public partial class Zombie : AnimatedSprite2D
 {
 	float count = 0.0f;
 	bool on = false;
@@ -24,9 +24,10 @@ public partial class zombie : AnimatedSprite2D
 
 	public void ActivateCollision(bool activated)
 	{
-		var area = this.GetChild(0) as Area2D;
+		Area2D area = this.GetChild(0) as Area2D;
         if (area != null)
         {
+			area.Visible = activated;
 			area.SetProcess(activated);
         }
 

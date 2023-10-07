@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://diu46skdm373q"]
 
 [ext_resource type="Material" uid="uid://b1cfd07k5nio5" path="res://materials/MonsterMat.material" id="1_jdqhc"]
-[ext_resource type="Script" path="res://scripts/zombie.cs" id="2_4i7ia"]
 [ext_resource type="Texture2D" uid="uid://snp6l40dh686" path="res://sprites/zombie-Sheet.png" id="2_54eno"]
+[ext_resource type="Script" path="res://scripts/Zombie.cs" id="3_hnj56"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_budwr"]
 atlas = ExtResource("2_54eno")
@@ -65,7 +65,7 @@ position = Vector2(336, 261)
 scale = Vector2(1.52344, 1.52344)
 sprite_frames = SubResource("SpriteFrames_4nrki")
 offset = Vector2(0, -60)
-script = ExtResource("2_4i7ia")
+script = ExtResource("3_hnj56")
 
 [node name="Area2D" type="Area2D" parent="."]
 

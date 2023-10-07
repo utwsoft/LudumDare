@@ -10,7 +10,7 @@ public partial class MonsterControl2 : Node2D
     private SpawnSystem _spawner;
 
     [Signal]
-    public delegate void OnMarkZombieEventHandler(zombie z, bool active);
+    public delegate void OnMarkZombieEventHandler(Zombie z, bool active);
 
 	private RandomNumberGenerator _rng;
 
@@ -43,7 +43,7 @@ public partial class MonsterControl2 : Node2D
 		_rng = rng;
 
         _spawnTime = 0.5f;
-        _lightTime = _rng.RandfRange(0.25f, 1.0f);
+        _lightTime = _rng.RandfRange(0.25f, 0.75f);
 
         int initialSpawnCount = 16;
 
@@ -54,7 +54,7 @@ public partial class MonsterControl2 : Node2D
 
             if (!spawner.IsOccupied())
             {
-                zombie z = CreateZombie();
+                Zombie z = CreateZombie();
                 z.Position = Vector2.Zero;
                 spawner.Occupy(z);
                 initialSpawnCount--;
@@ -93,12 +93,12 @@ public partial class MonsterControl2 : Node2D
 
         int index = _rng.RandiRange(0, slots.Count);
 
-        zombie z = CreateZombie();
+        Zombie z = CreateZombie();
         slots[index].Occupy(z);
         z.Position = Vector2.Zero;
     }
 
-    private zombie CreateZombie()
+    private Zombie CreateZombie()
     {
         if (_zombieScene == null)
             return null;
@@ -113,7 +113,7 @@ public partial class MonsterControl2 : Node2D
             sprite.Position = Vector2.Zero;
         }
 
-        zombie z = node as zombie;
+        Zombie z = node as Zombie;
         if (z != null)
         {
             z.SetLit(false);
@@ -148,7 +148,7 @@ public partial class MonsterControl2 : Node2D
                 {
                     Spawner spawner = occupiedSpawners[i];
 
-                    zombie z = spawner.GetZombie();
+                    Zombie z = spawner.GetZombie();
                     EmitSignal(SignalName.OnMarkZombie, z, true);
                 }
             }
@@ -156,7 +156,7 @@ public partial class MonsterControl2 : Node2D
             {
                 foreach (Spawner child in occupiedSpawners)
                 {
-                    zombie z = child.GetZombie();
+                    Zombie z = child.GetZombie();
                     EmitSignal(SignalName.OnMarkZombie, z, false);
                 }
             }

@@ -7,7 +7,7 @@ public partial class MonsterControl : Node2D
     private PackedScene _zombieScene;
 
     [Signal]
-    public delegate void OnMarkZombieEventHandler(zombie z, bool active);
+    public delegate void OnMarkZombieEventHandler(Zombie z, bool active);
 
     [Export]
 	private int TotalDistributionWidth;
@@ -85,7 +85,7 @@ public partial class MonsterControl : Node2D
 
         var node = _zombieScene.Instantiate();
 
-        node.Name = "zombie";
+        node.Name = "Zombie";
 
         AddChild(node);
 
@@ -95,7 +95,7 @@ public partial class MonsterControl : Node2D
             sprite.Position = new Vector2(x, y);
         }
 
-        zombie z = node as zombie;
+        Zombie z = node as Zombie;
         if (z != null)
         {
             z.SetWalkSpeed(10.0f);
@@ -139,7 +139,7 @@ public partial class MonsterControl : Node2D
 
                 foreach (var i in indices)
                 {
-                    zombie z = GetChild(i) as zombie;
+                    Zombie z = GetChild(i) as Zombie;
                     EmitSignal(SignalName.OnMarkZombie, z, true);
                 }
             }
@@ -148,7 +148,7 @@ public partial class MonsterControl : Node2D
                 int count = GetChildCount();
                 foreach (var child in  GetChildren())
                 {
-                    zombie z = child as zombie;
+                    Zombie z = child as Zombie;
                     EmitSignal(SignalName.OnMarkZombie, z, false);
                 }
 

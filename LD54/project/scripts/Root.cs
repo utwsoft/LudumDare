@@ -132,12 +132,12 @@ public partial class Root : Node2D
         {
             GD.Print("Root clicked");
 
-            //zombie z = SelectRandomZombie();
+            //Zombie z = SelectRandomZombie();
             //MarkZombie(z);
         }
     }
 
-    private zombie SelectRandomZombie()
+    private Zombie SelectRandomZombie()
     {
         Node2D monsters = GetMonstersNode();
         if (monsters != null)
@@ -147,13 +147,13 @@ public partial class Root : Node2D
 
             GD.Print($"index: {index}");
 
-            return monsters.GetChild(index) as zombie;
+            return monsters.GetChild(index) as Zombie;
         }
 
         return null;
     }
 
-    private void MarkZombie(zombie z, bool active)
+    private void MarkZombie(Zombie z, bool active)
     {
         if (z != null)
         {
@@ -177,7 +177,7 @@ public partial class Root : Node2D
         }
     }
 
-    public void KillZombie(Node2D zombie)
+    public void KillZombie(Node2D Zombie)
     {
         _killCount++;
 

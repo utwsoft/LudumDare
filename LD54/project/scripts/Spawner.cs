@@ -4,7 +4,7 @@ using System;
 public partial class Spawner : Node2D
 {
 	private bool _isOccupied;
-	private zombie _zombie;
+	private Zombie _zombie;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -17,14 +17,14 @@ public partial class Spawner : Node2D
 	{
 	}
 
-	public void Occupy(zombie z)
+	public void Occupy(Zombie z)
 	{
 		_zombie = z;
 		AddChild(z);
 		_isOccupied = true;
 	}
 
-	public zombie GetZombie() { return _zombie; }
+	public Zombie GetZombie() { return _zombie; }
 
 	public void Evacuate()
 	{
