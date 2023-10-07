@@ -55,7 +55,6 @@ public partial class MonsterControl2 : Node2D
             if (!spawner.IsOccupied())
             {
                 Zombie z = CreateZombie();
-                z.Position = Vector2.Zero;
                 spawner.Occupy(z);
                 initialSpawnCount--;
             }
@@ -91,11 +90,10 @@ public partial class MonsterControl2 : Node2D
         if (slots.Count == 0)
             return;
 
-        int index = _rng.RandiRange(0, slots.Count);
+        int index = _rng.RandiRange(0, slots.Count - 1);
 
         Zombie z = CreateZombie();
         slots[index].Occupy(z);
-        z.Position = Vector2.Zero;
     }
 
     private Zombie CreateZombie()
@@ -110,7 +108,11 @@ public partial class MonsterControl2 : Node2D
         AnimatedSprite2D sprite = node as AnimatedSprite2D;
         if (sprite != null)
         {
-            sprite.Position = Vector2.Zero;
+            float halfWidthVar = 64.0f;
+            float halfHeightVar = 32.0f;
+            float randX = _rng.RandfRange(-halfWidthVar, halfWidthVar);
+            float randY = _rng.RandfRange(-halfHeightVar, halfHeightVar);
+            sprite.Position = new Vector2(randX, randY);
         }
 
         Zombie z = node as Zombie;

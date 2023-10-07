@@ -197,8 +197,8 @@ public partial class Root : Node2D
 
         _killCount = 0;
 
-
         _spawner.Reset();
+        _monsterControl.Init(_rng);
 
         if (FinalCount != null)
         {

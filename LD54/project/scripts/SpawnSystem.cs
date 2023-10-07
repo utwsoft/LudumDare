@@ -36,6 +36,7 @@ public partial class SpawnSystem : Node2D
 	{
 		foreach (var child in GetChildren())
 		{
+			RemoveChild(child);
 			child.QueueFree();
 		}
 
